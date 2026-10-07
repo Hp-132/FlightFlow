@@ -1,7 +1,13 @@
 // VITE_API_URL="/" means "same origin as the dashboard" (single-container
 // hosting); the trailing slash is dropped so paths join cleanly.
 const API_BASE = (import.meta.env.VITE_API_URL ?? 'http://localhost:8000').replace(/\/+$/, '')
-const API_KEY = import.meta.env.VITE_API_KEY ?? 'dev-local-key-change-me'
+// When the API serves this page it injects its own key at runtime
+// (window.__FLIGHTFLOW_API_KEY__), which wins over the build-time value so
+// the two can never drift apart. Empty values fall through to the next one.
+const API_KEY =
+  (window as { __FLIGHTFLOW_API_KEY__?: string }).__FLIGHTFLOW_API_KEY__ ||
+  import.meta.env.VITE_API_KEY ||
+  'dev-local-key-change-me'
 
 async function request<T>(path: string, init?: RequestInit): Promise<T> {
   const res = await fetch(`${API_BASE}${path}`, {

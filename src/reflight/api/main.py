@@ -1,8 +1,9 @@
+import json
 from pathlib import Path
 
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import FileResponse
+from fastapi.responses import FileResponse, HTMLResponse
 
 from reflight.api.routes_chaos import fairness_router
 from reflight.api.routes_chaos import router as chaos_router
@@ -59,12 +60,23 @@ if settings.all_in_one:
 # other GET falls back to index.html for client-side routing.
 if settings.dashboard_dist and Path(settings.dashboard_dist, "index.html").is_file():
     _dist = Path(settings.dashboard_dist).resolve()
+    _index = _dist / "index.html"
+
+    def _index_with_runtime_config() -> HTMLResponse:
+        """index.html with this server's API key injected at serve time, so
+        the dashboard always matches API_STATIC_KEY without depending on a
+        build-time VITE_API_KEY (hosts don't reliably pass build args). The
+        key is a demo key: anyone who can load the page can read it."""
+        key = json.dumps(settings.api_static_key).replace("<", "\\u003c")
+        script = f"<script>window.__FLIGHTFLOW_API_KEY__={key}</script>"
+        html = _index.read_text(encoding="utf-8").replace("</head>", f"{script}</head>", 1)
+        return HTMLResponse(html, headers={"Cache-Control": "no-store"})
 
     @app.get("/{full_path:path}", include_in_schema=False)
-    def dashboard(full_path: str) -> FileResponse:
+    def dashboard(full_path: str):
         candidate = (_dist / full_path).resolve()
-        if full_path and _dist in candidate.parents and candidate.is_file():
+        if full_path and _dist in candidate.parents and candidate.is_file() and candidate != _index:
             return FileResponse(candidate)
         if full_path.startswith(("assets/", "images/")):
             raise HTTPException(status_code=404)
-        return FileResponse(_dist / "index.html")
+        return _index_with_runtime_config()
