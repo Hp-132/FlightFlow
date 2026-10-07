@@ -5,6 +5,7 @@ import {
   ArrowRight,
   BarChart3,
   GaugeCircle,
+  Info,
   Search,
   ShieldCheck,
   Users,
@@ -30,16 +31,30 @@ const PHOTOS = {
   },
 }
 
+/**
+ * Licence attribution kept out of the way: a small info icon on the photo
+ * that reveals the credit on hover, keyboard focus or tap. The CC BY /
+ * CC BY-SA licences require the credit to be reachable, not prominent.
+ */
 function PhotoCredit({ photo, className }: { photo: (typeof PHOTOS)['hero']; className?: string }) {
   return (
-    <a
-      href={photo.href}
-      target="_blank"
-      rel="noreferrer"
-      className={`t-caption transition-colors ${className ?? ''}`}
-    >
-      Photo: {photo.credit} · {photo.license}
-    </a>
+    <div className={`group/credit absolute z-10 ${className ?? ''}`}>
+      <button
+        type="button"
+        aria-label="Photo credit"
+        className="flex size-6 items-center justify-center rounded-full bg-black/25 text-white/70 backdrop-blur-sm transition-colors hover:bg-black/45 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/60"
+      >
+        <Info className="size-3.5" aria-hidden />
+      </button>
+      <a
+        href={photo.href}
+        target="_blank"
+        rel="noreferrer"
+        className="t-caption pointer-events-none absolute bottom-full right-0 mb-1.5 whitespace-nowrap rounded-md bg-black/70 px-2 py-1 text-white/90 opacity-0 backdrop-blur-sm transition-opacity duration-200 group-hover/credit:pointer-events-auto group-hover/credit:opacity-100 group-focus-within/credit:pointer-events-auto group-focus-within/credit:opacity-100 hover:text-white"
+      >
+        Photo: {photo.credit} · {photo.license}
+      </a>
+    </div>
   )
 }
 
@@ -94,7 +109,7 @@ export function RunHero({ onConfigure }: { onConfigure: () => void }) {
         </div>
       </motion.div>
 
-      <PhotoCredit photo={PHOTOS.hero} className="absolute bottom-3 right-4 text-white/55 hover:text-white" />
+      <PhotoCredit photo={PHOTOS.hero} className="bottom-3 right-3" />
     </section>
   )
 }
@@ -125,10 +140,10 @@ export function HowItWorks() {
           loading="lazy"
           className="absolute inset-0 h-full w-full object-cover contrast-[1.12] saturate-[1.2] transition-transform duration-700 ease-out hover:scale-[1.03]"
         />
-        <figcaption className="absolute inset-x-0 bottom-0 bg-linear-to-t from-[#0f2238]/85 to-transparent px-4 pb-3 pt-10">
+        <figcaption className="absolute inset-x-0 bottom-0 bg-linear-to-t from-[#0f2238]/85 to-transparent pb-3 pl-4 pr-12 pt-10">
           <p className="t-section text-white">One storm. Hundreds of flights. Thousands of passengers.</p>
-          <PhotoCredit photo={PHOTOS.apron} className="text-white/60 hover:text-white" />
         </figcaption>
+        <PhotoCredit photo={PHOTOS.apron} className="bottom-3 right-3" />
       </figure>
 
       <div className="flex flex-col justify-center">
