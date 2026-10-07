@@ -1,0 +1,201 @@
+# Reflight services. All six run the same reflight:dev image with a
+# different argument, exactly as in docker-compose.yml.
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: migrate
+  namespace: reflight
+spec:
+  backoffLimit: 10
+  template:
+    spec:
+      restartPolicy: OnFailure
+      containers:
+        - name: migrate
+          image: reflight:dev
+          imagePullPolicy: IfNotPresent
+          args: ["migrate"]
+          envFrom:
+            - secretRef: { name: reflight-secrets }
+            - configMapRef: { name: reflight-config }
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: minio-init
+  namespace: reflight
+spec:
+  backoffLimit: 10
+  template:
+    spec:
+      restartPolicy: OnFailure
+      containers:
+        - name: mc
+          image: quay.io/minio/mc:latest
+          envFrom:
+            - secretRef: { name: reflight-secrets }
+            - configMapRef: { name: reflight-config }
+          command: ["sh", "-c"]
+          args:
+            - >-
+              until mc alias set local http://minio:9000 "$MINIO_ROOT_USER" "$MINIO_ROOT_PASSWORD";
+              do echo "waiting for minio"; sleep 3; done &&
+              mc mb -p "local/$MINIO_BUCKET" || true
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: api
+  namespace: reflight
+spec:
+  replicas: 1
+  selector:
+    matchLabels: { app: api }
+  template:
+    metadata:
+      labels: { app: api }
+    spec:
+      containers:
+        - name: api
+          image: reflight:dev
+          imagePullPolicy: IfNotPresent
+          args: ["api"]
+          envFrom:
+            - secretRef: { name: reflight-secrets }
+            - configMapRef: { name: reflight-config }
+          ports:
+            - containerPort: 8000
+          readinessProbe:
+            httpGet: { path: /healthz, port: 8000 }
+            initialDelaySeconds: 5
+            periodSeconds: 5
+          resources:
+            requests: { cpu: 100m, memory: 256Mi }
+            limits: { cpu: "1", memory: 512Mi }
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: api
+  namespace: reflight
+spec:
+  selector: { app: api }
+  ports:
+    - port: 8000
+      targetPort: 8000
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: partners
+  namespace: reflight
+spec:
+  replicas: 1
+  selector:
+    matchLabels: { app: partners }
+  template:
+    metadata:
+      labels: { app: partners }
+    spec:
+      containers:
+        - name: partners
+          image: reflight:dev
+          imagePullPolicy: IfNotPresent
+          args: ["partners"]
+          envFrom:
+            - secretRef: { name: reflight-secrets }
+            - configMapRef: { name: reflight-config }
+          ports:
+            - containerPort: 8100
+          resources:
+            requests: { cpu: 100m, memory: 256Mi }
+            limits: { cpu: "1", memory: 512Mi }
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: partners
+  namespace: reflight
+spec:
+  selector: { app: partners }
+  ports:
+    - port: 8100
+      targetPort: 8100
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: relay
+  namespace: reflight
+spec:
+  replicas: 1
+  selector:
+    matchLabels: { app: relay }
+  template:
+    metadata:
+      labels: { app: relay }
+    spec:
+      containers:
+        - name: relay
+          image: reflight:dev
+          imagePullPolicy: IfNotPresent
+          args: ["relay"]
+          envFrom:
+            - secretRef: { name: reflight-secrets }
+            - configMapRef: { name: reflight-config }
+          resources:
+            requests: { cpu: 100m, memory: 192Mi }
+            limits: { cpu: 500m, memory: 512Mi }
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: planner
+  namespace: reflight
+spec:
+  replicas: 1
+  selector:
+    matchLabels: { app: planner }
+  template:
+    metadata:
+      labels: { app: planner }
+    spec:
+      containers:
+        - name: planner
+          image: reflight:dev
+          imagePullPolicy: IfNotPresent
+          args: ["planner"]
+          envFrom:
+            - secretRef: { name: reflight-secrets }
+            - configMapRef: { name: reflight-config }
+          resources:
+            requests: { cpu: 250m, memory: 512Mi }
+            limits: { cpu: "2", memory: 1Gi }
+---
+# The one that KEDA scales. 100m CPU / 128Mi so 20 replicas still fit on a
+# laptop (section 10).
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: worker
+  namespace: reflight
+spec:
+  replicas: 1
+  selector:
+    matchLabels: { app: worker }
+  template:
+    metadata:
+      labels: { app: worker }
+    spec:
+      terminationGracePeriodSeconds: 30
+      containers:
+        - name: worker
+          image: reflight:dev
+          imagePullPolicy: IfNotPresent
+          args: ["worker"]
+          envFrom:
+            - secretRef: { name: reflight-secrets }
+            - configMapRef: { name: reflight-config }
+          resources:
+            requests: { cpu: 100m, memory: 128Mi }
+            limits: { cpu: 500m, memory: 256Mi }

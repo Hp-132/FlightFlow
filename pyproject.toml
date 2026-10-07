@@ -1,0 +1,57 @@
+[project]
+name = "reflight"
+version = "0.1.0"
+description = "Reflight: airline disruption-recovery engine"
+requires-python = ">=3.12"
+dependencies = [
+    "fastapi>=0.115",
+    "uvicorn[standard]>=0.30",
+    "pydantic>=2.8",
+    "pydantic-settings>=2.4",
+    "sqlalchemy>=2.0",
+    "alembic>=1.13",
+    "psycopg[binary]>=3.2",
+    "pika>=1.3",
+    "boto3>=1.34",
+    "redis>=5.0",
+    "simpy>=4.1",
+    "sse-starlette>=2.1",
+    "python-dotenv>=1.0",
+    "orjson>=3.10",
+    "ortools>=9.10",
+    "httpx>=0.27",
+    "pyyaml>=6.0",
+    "opentelemetry-api>=1.27",
+    "opentelemetry-sdk>=1.27",
+    "opentelemetry-exporter-otlp>=1.27",
+    "opentelemetry-instrumentation-fastapi>=0.48b0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.3",
+    "pytest-asyncio>=0.24",
+    "ruff>=0.6",
+]
+
+[tool.ruff]
+line-length = 110
+target-version = "py312"
+exclude = ["migrations/versions"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B"]
+ignore = [
+    "E501",  # long lines are caught by the formatter, not the linter
+    "B008",  # FastAPI's Depends()/Header() defaults are the documented idiom
+]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/**" = ["B011"]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"

@@ -1,0 +1,35 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: reflight
+
+resources:
+  - namespace.yaml
+  - infra.yaml
+  - app.yaml
+
+# Credentials come from the same .env the Compose stack uses -- nothing is
+# hardcoded in a manifest. `make k3d-up` generates these from .env.
+secretGenerator:
+  - name: reflight-secrets
+    envs:
+      - secrets.env
+
+configMapGenerator:
+  - name: reflight-config
+    literals:
+      - POSTGRES_HOST=postgres
+      - POSTGRES_PORT=5432
+      - RABBITMQ_HOST=rabbitmq
+      - RABBITMQ_PORT=5672
+      - RABBITMQ_MGMT_HOST=rabbitmq
+      - RABBITMQ_MGMT_PORT=15672
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - MINIO_HOST=minio
+      - MINIO_PORT=9000
+      - PARTNERS_HOST=partners
+      - PARTNERS_PORT=8100
+      - API_PORT=8000
+
+generatorOptions:
+  disableNameSuffixHash: true

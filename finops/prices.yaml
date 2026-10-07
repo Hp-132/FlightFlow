@@ -1,0 +1,97 @@
+# Price book for the FinOps estimate (F12, section 12).
+#
+# Reflight runs locally for nothing; this file is what lets the report say
+# what the same run *would* have cost on a managed platform. Every number
+# carries its own `as_of` and `source_url`.
+#
+# `confidence: official` = read off the provider's own pricing page.
+# `confidence: corroborated` = the provider renders that table in JS so it
+# can't be read directly; the value was taken from multiple independent
+# published sources that agree. Re-check these before quoting them
+# anywhere that matters.
+#
+# All prices are USD, us-east-1 / East US, on-demand, Linux/x86, and
+# exclude free tiers (a real bill would be lower for a run this small).
+
+default_profile: aws-ecs-fargate
+
+profiles:
+  aws-ecs-fargate:
+    label: AWS ECS Fargate + SQS + S3 + RDS
+    currency: USD
+    region: us-east-1
+
+    compute:
+      price_vcpu_second: 0.000011244
+      price_gib_second: 0.000001235
+      as_of: "2026-09-19"
+      source_url: https://aws.amazon.com/fargate/pricing/
+      confidence: official
+
+    queue:
+      price_per_million_requests: 0.40
+      as_of: "2026-09-19"
+      source_url: https://aws.amazon.com/sqs/pricing/
+      confidence: corroborated
+
+    object_store:
+      price_gb_month: 0.023
+      price_per_1000_put: 0.005
+      price_per_1000_get: 0.0004
+      as_of: "2026-09-19"
+      source_url: https://aws.amazon.com/s3/pricing/
+      confidence: corroborated
+
+    database:
+      instance: db.t4g.micro (PostgreSQL, Single-AZ)
+      price_instance_hour: 0.016
+      as_of: "2026-09-19"
+      source_url: https://aws.amazon.com/rds/postgresql/pricing/
+      confidence: corroborated
+
+  azure-container-apps:
+    label: Azure Container Apps + Service Bus + Blob + Flexible Server
+    currency: USD
+    region: East US
+
+    compute:
+      price_vcpu_second: 0.000024
+      price_gib_second: 0.000003
+      as_of: "2026-09-19"
+      source_url: https://azure.microsoft.com/en-us/pricing/details/container-apps/
+      confidence: corroborated
+
+    queue:
+      # Service Bus Standard: $10/month base + per-million operations.
+      # The base fee is not charged to a single short run, so only the
+      # marginal per-operation rate is applied here (stated as an
+      # assumption in the report).
+      price_per_million_requests: 0.80
+      as_of: "2026-09-19"
+      source_url: https://azure.microsoft.com/en-us/pricing/details/service-bus/
+      confidence: corroborated
+
+    object_store:
+      price_gb_month: 0.018
+      price_per_1000_put: 0.0055
+      price_per_1000_get: 0.00044
+      as_of: "2026-09-19"
+      source_url: https://azure.microsoft.com/en-us/pricing/details/storage/blobs/
+      confidence: corroborated
+
+    database:
+      instance: B1ms (Azure Database for PostgreSQL Flexible Server)
+      price_instance_hour: 0.0164
+      as_of: "2026-09-19"
+      source_url: https://azure.microsoft.com/en-us/pricing/details/postgresql/flexible-server/
+      confidence: corroborated
+
+# Sizing assumptions for the containers Reflight would run, matching the
+# k8s/ manifests' requests (section 10: 100m CPU / 128Mi per worker).
+sizing:
+  worker:
+    vcpu: 0.1
+    gib: 0.125
+  planner:
+    vcpu: 0.5
+    gib: 0.5

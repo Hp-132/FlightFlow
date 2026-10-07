@@ -1,0 +1,52 @@
+{
+  "title": "Reflight / Run Progress",
+  "uid": "reflight-run-progress",
+  "timezone": "browser",
+  "schemaVersion": 39,
+  "refresh": "5s",
+  "time": { "from": "now-15m", "to": "now" },
+  "panels": [
+    {
+      "type": "timeseries",
+      "title": "Sagas by state over time",
+      "gridPos": { "h": 9, "w": 12, "x": 0, "y": 0 },
+      "targets": [
+        { "expr": "sum by (state) (saga_finished_total)", "legendFormat": "{{state}}" }
+      ]
+    },
+    {
+      "type": "timeseries",
+      "title": "Disruption events by cause over time",
+      "gridPos": { "h": 9, "w": 12, "x": 12, "y": 0 },
+      "targets": [
+        { "expr": "sum by (cause) (rate(disruption_events_total[1m])) * 60", "legendFormat": "{{cause}}/min" }
+      ]
+    },
+    {
+      "type": "stat",
+      "title": "Sagas started",
+      "gridPos": { "h": 6, "w": 6, "x": 0, "y": 9 },
+      "targets": [{ "expr": "sum(saga_started_total)" }]
+    },
+    {
+      "type": "stat",
+      "title": "Completed",
+      "gridPos": { "h": 6, "w": 6, "x": 6, "y": 9 },
+      "targets": [{ "expr": "sum(saga_finished_total{state=\"COMPLETED\"})" }]
+    },
+    {
+      "type": "stat",
+      "title": "Compensated",
+      "gridPos": { "h": 6, "w": 6, "x": 12, "y": 9 },
+      "targets": [{ "expr": "sum(saga_finished_total{state=\"COMPENSATED\"})" }]
+    },
+    {
+      "type": "stat",
+      "title": "Needs manual / no capacity",
+      "gridPos": { "h": 6, "w": 6, "x": 18, "y": 9 },
+      "targets": [
+        { "expr": "sum(saga_finished_total{state=~\"NEEDS_MANUAL|FAILED_NO_CAPACITY\"})" }
+      ]
+    }
+  ]
+}

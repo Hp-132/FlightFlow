@@ -1,0 +1,74 @@
+{
+  "title": "Reflight / Ops",
+  "uid": "reflight-ops",
+  "timezone": "browser",
+  "schemaVersion": 39,
+  "refresh": "5s",
+  "time": { "from": "now-15m", "to": "now" },
+  "panels": [
+    {
+      "type": "timeseries",
+      "title": "Queue depth vs worker count",
+      "gridPos": { "h": 8, "w": 12, "x": 0, "y": 0 },
+      "targets": [
+        { "expr": "rabbitmq_queue_messages_ready", "legendFormat": "queue depth (all queues)" },
+        { "expr": "sum(workers_active)", "legendFormat": "workers active" }
+      ]
+    },
+    {
+      "type": "timeseries",
+      "title": "Saga throughput (finished / min)",
+      "gridPos": { "h": 8, "w": 12, "x": 12, "y": 0 },
+      "targets": [
+        { "expr": "sum by (state) (rate(saga_finished_total[1m])) * 60", "legendFormat": "{{state}}" }
+      ]
+    },
+    {
+      "type": "timeseries",
+      "title": "Step latency p50 / p95",
+      "gridPos": { "h": 8, "w": 12, "x": 0, "y": 8 },
+      "targets": [
+        { "expr": "histogram_quantile(0.50, sum by (le, step) (rate(saga_step_duration_seconds_bucket[1m])))", "legendFormat": "p50 {{step}}" },
+        { "expr": "histogram_quantile(0.95, sum by (le, step) (rate(saga_step_duration_seconds_bucket[1m])))", "legendFormat": "p95 {{step}}" }
+      ]
+    },
+    {
+      "type": "timeseries",
+      "title": "Retries and DLQ rate",
+      "gridPos": { "h": 8, "w": 12, "x": 12, "y": 8 },
+      "targets": [
+        { "expr": "sum by (step) (rate(saga_step_retries_total[1m])) * 60", "legendFormat": "retries/min {{step}}" },
+        { "expr": "sum(rate(dlq_messages_total[1m])) * 60", "legendFormat": "dlq/min" }
+      ]
+    },
+    {
+      "type": "timeseries",
+      "title": "Seat conflicts",
+      "gridPos": { "h": 8, "w": 8, "x": 0, "y": 16 },
+      "targets": [{ "expr": "rate(seat_conflict_total[1m]) * 60", "legendFormat": "conflicts/min" }]
+    },
+    {
+      "type": "timeseries",
+      "title": "Outbox lag",
+      "gridPos": { "h": 8, "w": 8, "x": 8, "y": 16 },
+      "targets": [{ "expr": "outbox_lag_seconds", "legendFormat": "lag (s)" }]
+    },
+    {
+      "type": "stat",
+      "title": "Invariant status",
+      "gridPos": { "h": 8, "w": 8, "x": 16, "y": 16 },
+      "targets": [{ "expr": "invariant_violations", "legendFormat": "violations" }],
+      "fieldConfig": {
+        "defaults": {
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              { "color": "green", "value": null },
+              { "color": "red", "value": 1 }
+            ]
+          }
+        }
+      }
+    }
+  ]
+}

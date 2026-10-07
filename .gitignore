@@ -1,0 +1,40 @@
+# environment files (any directory); keep only the placeholder examples
+.env
+.env.*
+!.env.example
+
+# keys / certificates
+*.pem
+*.key
+*.p12
+*.pfx
+
+__pycache__/
+*.pyc
+.venv/
+venv/
+*.egg-info/
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+dist/
+build/
+
+# dashboard
+dashboard/node_modules/
+dashboard/dist/
+
+# infra volumes / local state
+.data/
+*.log
+
+# editors
+.vscode/
+.idea/
+
+# k3d secrets generated from .env by scripts/k3d_up.sh
+k8s/base/secrets.env
+
+# local screenshot/debug helpers
+dashboard/shots/
+dashboard/shots.mjs
