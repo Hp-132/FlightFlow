@@ -1,4 +1,4 @@
-import { ExternalLink } from 'lucide-react'
+import { ExternalLink, RefreshCw } from 'lucide-react'
 import * as React from 'react'
 
 import { PageHeader } from '@/components/page-header'
@@ -21,8 +21,26 @@ const DASHBOARDS = [
   },
 ]
 
+type GrafanaStatus = 'checking' | 'up' | 'down'
+
+// A cross-origin iframe never reports load failures, so probe Grafana
+// directly. An opaque no-cors response still proves the server answered;
+// only a refused connection rejects.
+function useGrafanaStatus() {
+  const [status, setStatus] = React.useState<GrafanaStatus>('checking')
+  const check = React.useCallback(() => {
+    setStatus('checking')
+    fetch(`${GRAFANA_URL}/api/health`, { mode: 'no-cors', cache: 'no-store' })
+      .then(() => setStatus('up'))
+      .catch(() => setStatus('down'))
+  }, [])
+  React.useEffect(check, [check])
+  return { status, check }
+}
+
 export function OpsPage() {
   const [active, setActive] = React.useState(DASHBOARDS[0])
+  const { status, check } = useGrafanaStatus()
   const embedUrl = `${GRAFANA_URL}/d/${active.uid}?kiosk&theme=light&refresh=5s`
 
   return (
@@ -74,12 +92,33 @@ export function OpsPage() {
           <CardDescription>{active.description}</CardDescription>
         </CardHeader>
         <CardContent className="min-h-0 flex-1 overflow-hidden rounded-b-xl p-0">
-          <iframe
-            key={active.uid}
-            src={embedUrl}
-            title={`Grafana ${active.title}`}
-            className="h-full min-h-[480px] w-full border-0 bg-muted/30 lg:min-h-[600px]"
-          />
+          {status === 'up' ? (
+            <iframe
+              key={active.uid}
+              src={embedUrl}
+              title={`Grafana ${active.title}`}
+              className="h-full min-h-[480px] w-full border-0 bg-muted/30 lg:min-h-[600px]"
+            />
+          ) : (
+            <div className="flex h-full min-h-[480px] flex-col items-center justify-center gap-3 bg-muted/30 p-6 text-center lg:min-h-[600px]">
+              {status === 'checking' ? (
+                <p className="text-sm text-muted-foreground">Connecting to Grafana…</p>
+              ) : (
+                <>
+                  <p className="font-medium">Grafana isn't reachable at {GRAFANA_URL}</p>
+                  <p className="max-w-md text-sm text-muted-foreground">
+                    Start Docker Desktop, then run{' '}
+                    <code className="rounded bg-muted px-1 py-0.5">docker compose up -d grafana</code>{' '}
+                    (or <code className="rounded bg-muted px-1 py-0.5">make up</code> for the whole stack).
+                  </p>
+                  <Button variant="outline" size="sm" onClick={check}>
+                    <RefreshCw className="size-3.5" />
+                    Try again
+                  </Button>
+                </>
+              )}
+            </div>
+          )}
         </CardContent>
       </Card>
 
