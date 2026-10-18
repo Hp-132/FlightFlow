@@ -32,12 +32,14 @@ import { ChartTooltip } from '@/components/chart-tooltip'
 import { EmptyState } from '@/components/empty-state'
 import { StatCard } from '@/components/stat-card'
 import { StateDistribution } from '@/components/state-distribution'
+import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Skeleton } from '@/components/ui/skeleton'
 import { api, type DisruptionEvent } from '@/lib/api'
 import { AXIS_TICK } from '@/lib/chart'
 import { useActiveRun } from '@/lib/run-context'
+import { formatElapsed, useSeedFixture } from '@/lib/seed-fixture'
 import { useRunStream } from '@/lib/use-run-stream'
 import { cn } from '@/lib/utils'
 
@@ -146,10 +148,22 @@ export function LiveRunPage() {
   const [history, setHistory] = React.useState<HistoryPoint[]>([])
   const [paused, setPaused] = React.useState(false)
 
+  // Nothing to show from the live API: either no run was started this
+  // session, or there is a run but it has disrupted nobody. Either way the
+  // seeded fixture stands in, so the page is never blank on a fresh boot.
+  const liveBookings = data?.bookings_by_status ?? {}
+  const liveAffected =
+    (liveBookings.DISRUPTED ?? 0) + (liveBookings.REBOOKED ?? 0) + (liveBookings.UNRECOVERED ?? 0)
+  const liveSagaTotal = Object.values(data?.sagas_by_state ?? {}).reduce((sum, n) => sum + n, 0)
+  const liveEmpty = !runId || (!!data && liveAffected === 0 && liveSagaTotal === 0)
+
+  const { fixture, loading: fixtureLoading } = useSeedFixture(liveEmpty)
+  const usingFixture = liveEmpty && fixture !== null
+
   const disruptions = useQuery({
     queryKey: ['disruptions', runId],
     queryFn: () => api.getDisruptions(runId!),
-    enabled: !!runId,
+    enabled: !!runId && !usingFixture,
     refetchInterval: paused ? false : 4000,
   })
 
@@ -169,7 +183,32 @@ export function LiveRunPage() {
     })
   }, [data, paused])
 
-  if (!runId) {
+  // A fixture's samples carry offsets from the start of the run rather than
+  // wall-clock times, so they get elapsed labels.
+  const fixtureHistory = React.useMemo<HistoryPoint[]>(
+    () =>
+      usingFixture
+        ? fixture.history.map((p) => ({
+            t: p.offset_seconds,
+            label: formatElapsed(p.offset_seconds),
+            completed: p.completed,
+            inFlight: p.inFlight,
+            queueDepth: p.queueDepth,
+            workers: p.workers,
+          }))
+        : [],
+    [usingFixture, fixture],
+  )
+
+  if (liveEmpty && !usingFixture) {
+    if (fixtureLoading) {
+      return (
+        <div className="flex flex-col gap-6">
+          <Skeleton className="h-40 w-full rounded-2xl" />
+          <Skeleton className="h-24 w-full" />
+        </div>
+      )
+    }
     return (
       <EmptyState
         title="No run started yet"
@@ -180,8 +219,18 @@ export function LiveRunPage() {
     )
   }
 
-  const sagas = data?.sagas_by_state ?? {}
-  const bookings = data?.bookings_by_status ?? {}
+  const counters = usingFixture ? fixture.counters : data
+  const chartHistory = usingFixture ? fixtureHistory : history
+  const timelineEvents = usingFixture ? fixture.disruptions : (disruptions.data ?? [])
+  const timelineLoading = !usingFixture && disruptions.isLoading
+  const effectiveStrategy = usingFixture ? fixture.params.strategy : strategy
+  const effectiveRunId = usingFixture ? fixture.run.run_id : runId
+  const effectiveLabel = usingFixture
+    ? `${fixture.params.preset} · seed ${fixture.params.seed}`
+    : (presetLabel ?? 'Live run')
+
+  const sagas = counters?.sagas_by_state ?? {}
+  const bookings = counters?.bookings_by_status ?? {}
   const affected = (bookings.DISRUPTED ?? 0) + (bookings.REBOOKED ?? 0) + (bookings.UNRECOVERED ?? 0)
   const totalSagas = Object.values(sagas).reduce((sum, n) => sum + n, 0)
   const inFlight = NON_TERMINAL.reduce((sum, s) => sum + (sagas[s] ?? 0), 0)
@@ -189,17 +238,36 @@ export function LiveRunPage() {
   const settled = totalSagas > 0 && inFlight === 0
   const progressPct = totalSagas > 0 ? ((totalSagas - inFlight) / totalSagas) * 100 : 0
   const recoveredPct = totalSagas > 0 ? (completed / totalSagas) * 100 : 0
-  const loading = !data
+  const loading = !usingFixture && !data
 
   return (
     <div className="flex flex-col gap-6">
       {/* One live region for the whole run: a meaningful sentence rather
           than ten competing badges each announcing a bare number. */}
       <p role="status" aria-atomic="true" className="sr-only">
-        {loading
-          ? 'Connecting to the run stream.'
-          : `${completed.toLocaleString()} of ${totalSagas.toLocaleString()} sagas completed, ${inFlight.toLocaleString()} still in flight.`}
+        {usingFixture
+          ? `Showing seeded sample data: ${completed.toLocaleString()} of ${totalSagas.toLocaleString()} sagas completed. Start a run to see live numbers.`
+          : loading
+            ? 'Connecting to the run stream.'
+            : `${completed.toLocaleString()} of ${totalSagas.toLocaleString()} sagas completed, ${inFlight.toLocaleString()} still in flight.`}
       </p>
+
+      {usingFixture ? (
+        <div className="flex flex-wrap items-center gap-x-3 gap-y-1.5 rounded-xl border border-border bg-surface-alt/40 px-4 py-3">
+          <Badge variant="warning">Sample data</Badge>
+          <p className="t-caption text-muted-foreground">
+            No run has been started this session, so this is a seeded{' '}
+            {fixture.params.preset}/{fixture.params.strategy} run captured{' '}
+            {new Date(fixture.captured_at).toLocaleString(undefined, {
+              month: 'short',
+              day: 'numeric',
+              hour: '2-digit',
+              minute: '2-digit',
+            })}
+            . Start a run from Run Control to replace it with live numbers.
+          </p>
+        </div>
+      ) : null}
 
       <section className="hero-grid overflow-hidden rounded-2xl px-5 py-5 text-white shadow-raised sm:px-7 sm:py-6">
         <div className="flex flex-wrap items-start justify-between gap-4">
@@ -208,26 +276,26 @@ export function LiveRunPage() {
               <span
                 className={cn(
                   'flex items-center gap-1.5 rounded-full px-2 py-0.5',
-                  connected && !settled ? 'bg-success/25 text-white' : 'bg-white/15 text-white/90',
+                  !usingFixture && connected && !settled ? 'bg-success/25 text-white' : 'bg-white/15 text-white/90',
                 )}
               >
                 <span
                   className={cn(
                     'size-1.5 rounded-full',
-                    connected && !settled ? 'bg-success pulse-live' : 'bg-white/70',
+                    !usingFixture && connected && !settled ? 'bg-success pulse-live' : 'bg-white/70',
                   )}
                   aria-hidden
                 />
                 <span className="t-caption font-semibold">
-                  {settled ? 'settled' : connected ? 'live' : 'reconnecting'}
+                  {usingFixture ? 'sample' : settled ? 'settled' : connected ? 'live' : 'reconnecting'}
                 </span>
               </span>
               <span className="t-caption rounded-full bg-white/12 px-2 py-0.5 font-medium uppercase tracking-wide">
-                {strategy ?? 'greedy'}
+                {effectiveStrategy ?? 'greedy'}
               </span>
             </div>
-            <h1 className="t-title mt-2 text-white">{presetLabel ?? 'Live run'}</h1>
-            <p className="t-caption mt-0.5 font-mono text-white/60">{runId}</p>
+            <h1 className="t-title mt-2 text-white">{effectiveLabel}</h1>
+            <p className="t-caption mt-0.5 font-mono text-white/60">{effectiveRunId}</p>
           </div>
 
           <div className="text-right">
@@ -290,24 +358,26 @@ export function LiveRunPage() {
               <CardTitle>Recovery throughput</CardTitle>
               <CardDescription>Completed sagas against those still working.</CardDescription>
             </div>
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={() => setPaused((p) => !p)}
-              aria-pressed={paused}
-            >
-              {paused ? <Play className="size-3.5" /> : <Pause className="size-3.5" />}
-              {paused ? 'Resume' : 'Pause'}
-            </Button>
+            {usingFixture ? null : (
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => setPaused((p) => !p)}
+                aria-pressed={paused}
+              >
+                {paused ? <Play className="size-3.5" /> : <Pause className="size-3.5" />}
+                {paused ? 'Resume' : 'Pause'}
+              </Button>
+            )}
           </CardHeader>
           <CardContent className="h-64 pt-2">
-            {history.length === 0 ? (
+            {chartHistory.length === 0 ? (
               <div className="flex h-full items-center justify-center">
                 <p className="t-caption text-muted-foreground">Waiting for the first sample…</p>
               </div>
             ) : (
               <ResponsiveContainer width="100%" height="100%">
-                <ComposedChart data={history} margin={{ top: 4, right: 4, bottom: 0, left: -18 }}>
+                <ComposedChart data={chartHistory} margin={{ top: 4, right: 4, bottom: 0, left: -18 }}>
                   <defs>
                     <linearGradient id="fillCompleted" x1="0" y1="0" x2="0" y2="1">
                       <stop offset="0%" stopColor="var(--color-success)" stopOpacity={0.28} />
@@ -334,13 +404,13 @@ export function LiveRunPage() {
             </CardDescription>
           </CardHeader>
           <CardContent className="h-64 pt-2">
-            {history.length === 0 ? (
+            {chartHistory.length === 0 ? (
               <div className="flex h-full items-center justify-center">
                 <p className="t-caption text-muted-foreground">Waiting for the first sample…</p>
               </div>
             ) : (
               <ResponsiveContainer width="100%" height="100%">
-                <ComposedChart data={history} margin={{ top: 4, right: 4, bottom: 0, left: -18 }}>
+                <ComposedChart data={chartHistory} margin={{ top: 4, right: 4, bottom: 0, left: -18 }}>
                   <defs>
                     <linearGradient id="fillQueue" x1="0" y1="0" x2="0" y2="1">
                       <stop offset="0%" stopColor="var(--color-secondary)" stopOpacity={0.45} />
@@ -369,7 +439,7 @@ export function LiveRunPage() {
           </CardDescription>
         </CardHeader>
         <CardContent>
-          {disruptions.isLoading ? (
+          {timelineLoading ? (
             <div className="space-y-3">
               <Skeleton className="h-7 w-72" />
               <Skeleton className="h-14 w-full" />
@@ -377,12 +447,12 @@ export function LiveRunPage() {
           ) : (
             <AnimatePresence mode="wait">
               <motion.div
-                key={disruptions.data?.length ?? 0}
+                key={timelineEvents.length}
                 initial={{ opacity: 0.4 }}
                 animate={{ opacity: 1 }}
                 transition={{ duration: 0.2 }}
               >
-                <DisruptionTimeline events={disruptions.data ?? []} />
+                <DisruptionTimeline events={timelineEvents} />
               </motion.div>
             </AnimatePresence>
           )}

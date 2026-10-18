@@ -34,7 +34,7 @@ const NAV_GROUPS = [
     items: [
       { to: '/compare', label: 'Compare', icon: BarChart3 },
       { to: '/tenants', label: 'Airlines', icon: Users },
-      { to: '/ops', label: 'System Health', icon: GaugeCircle },
+      { to: '/analytics', label: 'Flight Analytics', icon: GaugeCircle },
     ],
   },
 ]

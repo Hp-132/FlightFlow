@@ -1,4 +1,4 @@
-.PHONY: up down reset build logs ps migrate test test-integration lint fmt \
+.PHONY: up down reset build logs ps migrate seed seed-force test test-integration lint fmt \
         demo-d1 demo-d2 demo-d3 demo-d6 demo-d7 finops invariants k3d-up k3d-down chaos
 
 API ?= http://localhost:8000
@@ -25,6 +25,14 @@ ps:
 
 migrate:
 	docker compose run --rm migrate
+
+# `up` already seeds on first boot via the seeder service; these are for
+# re-seeding by hand against a stack that is already running.
+seed:                       ## seed the dashboard fixture if it is missing
+	docker compose run --rm seeder
+
+seed-force:                 ## re-run the seed and overwrite the fixture
+	docker compose run --rm seeder --preset storm --seed 42 --strategy greedy --force
 
 # ---- quality --------------------------------------------------------------
 lint:

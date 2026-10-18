@@ -143,6 +143,11 @@ services:
       API_PORT: 8000
     ports:
       - "${API_PORT}:8000"
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "http://localhost:8000/healthz"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
     depends_on:
       <<: *app-depends-on
       minio-init:
@@ -205,6 +210,37 @@ services:
     depends_on:
       - otel-collector
 
+  # Seeds one deterministic run (seed 42, GREEDY) and freezes it into a JSON
+  # fixture the dashboard falls back to, so Run Progress is never empty on a
+  # fresh boot. Runs once and exits; skips the work if the fixture is already
+  # there (pass --force to re-seed).
+  seeder:
+    <<: *app-image
+    restart: "no"
+    # scripts/ is deliberately not in the image (see Dockerfile), so it comes
+    # in as a mount and the reflight.cli entrypoint is overridden.
+    entrypoint: ["python", "/app/scripts/seed_data.py"]
+    command: ["--preset", "storm", "--seed", "42", "--strategy", "greedy"]
+    environment:
+      <<: *app-env
+      API_STATIC_KEY: ${API_STATIC_KEY}
+      SEED_API_BASE: http://api:8000
+      SEED_OUT: /fixtures/seed42_greedy.json
+    volumes:
+      - ./scripts:/app/scripts:ro
+      - ./dashboard/public/fixtures:/fixtures
+    depends_on:
+      api:
+        condition: service_healthy
+      relay:
+        condition: service_started
+      planner:
+        condition: service_started
+      worker:
+        condition: service_started
+      partners:
+        condition: service_started
+
   dashboard:
     build:
       context: ./dashboard
@@ -214,27 +250,12 @@ services:
         VITE_API_KEY: ${API_STATIC_KEY}
     ports:
       - "${DASHBOARD_PORT}:80"
+    volumes:
+      # The seeder writes the fixture after this image was built, so it is
+      # mounted rather than baked in -- a re-seed needs no dashboard rebuild.
+      - ./dashboard/public/fixtures:/usr/share/nginx/html/fixtures:ro
     depends_on:
       - api
-
-  grafana:
-    image: grafana/grafana:11.2.0
-    environment:
-      GF_SECURITY_ADMIN_USER: ${GRAFANA_ADMIN_USER}
-      GF_SECURITY_ADMIN_PASSWORD: ${GRAFANA_ADMIN_PASSWORD}
-      GF_USERS_ALLOW_SIGN_UP: "false"
-      # Local dev only: lets the dashboard's Ops page iframe the boards
-      # without a login prompt. Do not carry this into a shared deploy.
-      GF_SECURITY_ALLOW_EMBEDDING: "true"
-      GF_AUTH_ANONYMOUS_ENABLED: "true"
-      GF_AUTH_ANONYMOUS_ORG_ROLE: Viewer
-    volumes:
-      - ./observability/grafana/provisioning:/etc/grafana/provisioning:ro
-      - grafana_data:/var/lib/grafana
-    ports:
-      - "${GRAFANA_PORT}:3000"
-    depends_on:
-      - prometheus
 
 volumes:
   postgres_data:
@@ -242,4 +263,3 @@ volumes:
   redis_data:
   minio_data:
   prometheus_data:
-  grafana_data:

@@ -179,7 +179,7 @@ const PAGES = [
   { to: '/sagas', icon: Search, title: 'Passenger History', detail: 'Look up any passenger and see every step of their rebooking.' },
   { to: '/compare', icon: BarChart3, title: 'Compare', detail: 'Put two planning methods side by side.' },
   { to: '/tenants', icon: Users, title: 'Airlines', detail: 'Check every airline was treated fairly.' },
-  { to: '/ops', icon: GaugeCircle, title: 'System Health', detail: 'Server and queue charts from Grafana.' },
+  { to: '/analytics', icon: GaugeCircle, title: 'Flight Analytics', detail: 'Schedule, delay and recovery analytics.' },
 ]
 
 /** A short map of the dashboard for first-time visitors. */

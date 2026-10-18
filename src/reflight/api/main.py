@@ -5,6 +5,7 @@ from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse, HTMLResponse
 
+from reflight.api.routes_analytics import router as analytics_router
 from reflight.api.routes_chaos import fairness_router
 from reflight.api.routes_chaos import router as chaos_router
 from reflight.api.routes_finops import router as finops_router
@@ -30,6 +31,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+app.include_router(analytics_router)
 app.include_router(scenarios_router)
 app.include_router(runs_router)
 app.include_router(stream_router)

@@ -1,13 +1,13 @@
 import * as React from 'react'
-import { Route, Routes } from 'react-router-dom'
+import { Navigate, Route, Routes } from 'react-router-dom'
 import { Toaster } from 'sonner'
 
 import { Header } from '@/components/layout/header'
 import { Sidebar } from '@/components/layout/sidebar'
+import { AnalyticsPage } from '@/pages/analytics'
 import { ComparePage } from '@/pages/compare'
 import { InvariantsPage } from '@/pages/invariants'
 import { LiveRunPage } from '@/pages/live-run'
-import { OpsPage } from '@/pages/ops'
 import { RunControlPage } from '@/pages/run-control'
 import { SagaInspectorPage } from '@/pages/saga-inspector'
 import { TenantsPage } from '@/pages/tenants'
@@ -29,7 +29,9 @@ export default function App() {
             <Route path="/sagas" element={<SagaInspectorPage />} />
             <Route path="/compare" element={<ComparePage />} />
             <Route path="/tenants" element={<TenantsPage />} />
-            <Route path="/ops" element={<OpsPage />} />
+            <Route path="/analytics" element={<AnalyticsPage />} />
+            {/* Grafana embed used to live here; keep the old path working. */}
+            <Route path="/ops" element={<Navigate to="/analytics" replace />} />
           </Routes>
         </main>
       </div>
