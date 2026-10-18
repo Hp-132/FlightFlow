@@ -18,7 +18,7 @@ function formatElapsed(startedAt: number | null): string {
 }
 
 export function Header({ onMenuClick }: { onMenuClick: () => void }) {
-  const { runId, presetLabel, strategy, startedAt } = useActiveRun()
+  const { runId, presetLabel, strategy, startedAt, clearActiveRun } = useActiveRun()
   const [, tick] = React.useState(0)
 
   React.useEffect(() => {
@@ -32,7 +32,14 @@ export function Header({ onMenuClick }: { onMenuClick: () => void }) {
     queryFn: () => api.getRun(runId!),
     enabled: !!runId,
     refetchInterval: 5000,
+    retry: (count, error) => !String((error as Error).message).includes('-> 404') && count < 3,
   })
+
+  const runGone = run.isError && String((run.error as Error).message).includes('-> 404')
+
+  React.useEffect(() => {
+    if (runGone) clearActiveRun()
+  }, [runGone, clearActiveRun])
 
   const invariants = useQuery({
     queryKey: ['invariants', runId],

@@ -148,14 +148,9 @@ export function LiveRunPage() {
   const [history, setHistory] = React.useState<HistoryPoint[]>([])
   const [paused, setPaused] = React.useState(false)
 
-  // Nothing to show from the live API: either no run was started this
-  // session, or there is a run but it has disrupted nobody. Either way the
-  // seeded fixture stands in, so the page is never blank on a fresh boot.
-  const liveBookings = data?.bookings_by_status ?? {}
-  const liveAffected =
-    (liveBookings.DISRUPTED ?? 0) + (liveBookings.REBOOKED ?? 0) + (liveBookings.UNRECOVERED ?? 0)
   const liveSagaTotal = Object.values(data?.sagas_by_state ?? {}).reduce((sum, n) => sum + n, 0)
-  const liveEmpty = !runId || (!!data && liveAffected === 0 && liveSagaTotal === 0)
+  const liveEmpty =
+    !runId || (!!data && liveSagaTotal === 0 && data.status !== 'RUNNING')
 
   const { fixture, loading: fixtureLoading } = useSeedFixture(liveEmpty)
   const usingFixture = liveEmpty && fixture !== null
@@ -256,7 +251,9 @@ export function LiveRunPage() {
         <div className="flex flex-wrap items-center gap-x-3 gap-y-1.5 rounded-xl border border-border bg-surface-alt/40 px-4 py-3">
           <Badge variant="warning">Sample data</Badge>
           <p className="t-caption text-muted-foreground">
-            No run has been started this session, so this is a seeded{' '}
+            {runId
+              ? 'This run has no saga data left in the database, so showing a seeded '
+              : 'No run has been started this session, so this is a seeded '}
             {fixture.params.preset}/{fixture.params.strategy} run captured{' '}
             {new Date(fixture.captured_at).toLocaleString(undefined, {
               month: 'short',

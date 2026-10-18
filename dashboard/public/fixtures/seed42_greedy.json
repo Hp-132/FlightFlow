@@ -1,0 +1,709 @@
+{
+  "fixture_version": 1,
+  "generated_by": "scripts/seed_data.py",
+  "captured_at": "2026-10-18T11:50:11.424802+00:00",
+  "params": {
+    "preset": "storm",
+    "seed": 42,
+    "strategy": "greedy",
+    "severity": 0.1
+  },
+  "run": {
+    "run_id": "bdf43ae0-644f-4dcd-956e-918a9e4b729b",
+    "scenario_id": "a452a461-62fb-49d3-bfed-9cb5127faed4",
+    "status": "RUNNING",
+    "strategy": "greedy",
+    "settled": true,
+    "wall_seconds": 63.1
+  },
+  "start": {
+    "run_id": "bdf43ae0-644f-4dcd-956e-918a9e4b729b",
+    "disruption_events": 25,
+    "cancelled_flights": 11,
+    "delayed_flights": 14,
+    "disrupted_bookings": 275,
+    "plan_batches_queued": 1
+  },
+  "counters": {
+    "run_id": "bdf43ae0-644f-4dcd-956e-918a9e4b729b",
+    "status": "RUNNING",
+    "strategy": "greedy",
+    "disruption_events": 25,
+    "bookings_by_status": {
+      "ACTIVE": 9724,
+      "UNRECOVERED": 53,
+      "REBOOKED": 222
+    },
+    "sagas_by_state": {
+      "FAILED_NO_CAPACITY": 53,
+      "COMPLETED": 222
+    },
+    "queue_depth": 78,
+    "workers_active": 1
+  },
+  "history": [
+    {
+      "offset_seconds": 0.5,
+      "completed": 0,
+      "inFlight": 0,
+      "queueDepth": 0,
+      "workers": 2
+    },
+    {
+      "offset_seconds": 1.5,
+      "completed": 0,
+      "inFlight": 0,
+      "queueDepth": 0,
+      "workers": 2
+    },
+    {
+      "offset_seconds": 2.6,
+      "completed": 0,
+      "inFlight": 0,
+      "queueDepth": 0,
+      "workers": 2
+    },
+    {
+      "offset_seconds": 3.7,
+      "completed": 0,
+      "inFlight": 0,
+      "queueDepth": 0,
+      "workers": 2
+    },
+    {
+      "offset_seconds": 4.8,
+      "completed": 0,
+      "inFlight": 0,
+      "queueDepth": 0,
+      "workers": 2
+    },
+    {
+      "offset_seconds": 5.9,
+      "completed": 0,
+      "inFlight": 0,
+      "queueDepth": 0,
+      "workers": 2
+    },
+    {
+      "offset_seconds": 7.0,
+      "completed": 0,
+      "inFlight": 0,
+      "queueDepth": 0,
+      "workers": 2
+    },
+    {
+      "offset_seconds": 8.1,
+      "completed": 0,
+      "inFlight": 0,
+      "queueDepth": 0,
+      "workers": 2
+    },
+    {
+      "offset_seconds": 9.2,
+      "completed": 0,
+      "inFlight": 222,
+      "queueDepth": 0,
+      "workers": 2
+    },
+    {
+      "offset_seconds": 10.3,
+      "completed": 0,
+      "inFlight": 222,
+      "queueDepth": 0,
+      "workers": 2
+    },
+    {
+      "offset_seconds": 11.4,
+      "completed": 0,
+      "inFlight": 222,
+      "queueDepth": 0,
+      "workers": 2
+    },
+    {
+      "offset_seconds": 12.5,
+      "completed": 0,
+      "inFlight": 222,
+      "queueDepth": 0,
+      "workers": 2
+    },
+    {
+      "offset_seconds": 13.7,
+      "completed": 0,
+      "inFlight": 222,
+      "queueDepth": 0,
+      "workers": 2
+    },
+    {
+      "offset_seconds": 14.8,
+      "completed": 0,
+      "inFlight": 222,
+      "queueDepth": 112,
+      "workers": 2
+    },
+    {
+      "offset_seconds": 15.8,
+      "completed": 10,
+      "inFlight": 212,
+      "queueDepth": 112,
+      "workers": 2
+    },
+    {
+      "offset_seconds": 16.9,
+      "completed": 10,
+      "inFlight": 212,
+      "queueDepth": 112,
+      "workers": 2
+    },
+    {
+      "offset_seconds": 18.0,
+      "completed": 10,
+      "inFlight": 212,
+      "queueDepth": 112,
+      "workers": 2
+    },
+    {
+      "offset_seconds": 19.1,
+      "completed": 18,
+      "inFlight": 204,
+      "queueDepth": 112,
+      "workers": 2
+    },
+    {
+      "offset_seconds": 20.2,
+      "completed": 28,
+      "inFlight": 194,
+      "queueDepth": 200,
+      "workers": 2
+    },
+    {
+      "offset_seconds": 21.3,
+      "completed": 39,
+      "inFlight": 183,
+      "queueDepth": 200,
+      "workers": 2
+    },
+    {
+      "offset_seconds": 22.4,
+      "completed": 45,
+      "inFlight": 177,
+      "queueDepth": 200,
+      "workers": 2
+    },
+    {
+      "offset_seconds": 23.4,
+      "completed": 45,
+      "inFlight": 177,
+      "queueDepth": 200,
+      "workers": 2
+    },
+    {
+      "offset_seconds": 24.5,
+      "completed": 45,
+      "inFlight": 177,
+      "queueDepth": 200,
+      "workers": 2
+    },
+    {
+      "offset_seconds": 25.6,
+      "completed": 45,
+      "inFlight": 177,
+      "queueDepth": 169,
+      "workers": 2
+    },
+    {
+      "offset_seconds": 26.6,
+      "completed": 45,
+      "inFlight": 177,
+      "queueDepth": 169,
+      "workers": 2
+    },
+    {
+      "offset_seconds": 27.7,
+      "completed": 45,
+      "inFlight": 177,
+      "queueDepth": 169,
+      "workers": 1
+    },
+    {
+      "offset_seconds": 28.8,
+      "completed": 45,
+      "inFlight": 177,
+      "queueDepth": 169,
+      "workers": 1
+    },
+    {
+      "offset_seconds": 29.9,
+      "completed": 45,
+      "inFlight": 177,
+      "queueDepth": 168,
+      "workers": 1
+    },
+    {
+      "offset_seconds": 31.0,
+      "completed": 45,
+      "inFlight": 177,
+      "queueDepth": 168,
+      "workers": 1
+    },
+    {
+      "offset_seconds": 32.1,
+      "completed": 55,
+      "inFlight": 167,
+      "queueDepth": 168,
+      "workers": 1
+    },
+    {
+      "offset_seconds": 33.2,
+      "completed": 72,
+      "inFlight": 150,
+      "queueDepth": 168,
+      "workers": 1
+    },
+    {
+      "offset_seconds": 34.2,
+      "completed": 93,
+      "inFlight": 129,
+      "queueDepth": 168,
+      "workers": 1
+    },
+    {
+      "offset_seconds": 35.3,
+      "completed": 99,
+      "inFlight": 123,
+      "queueDepth": 154,
+      "workers": 1
+    },
+    {
+      "offset_seconds": 36.4,
+      "completed": 99,
+      "inFlight": 123,
+      "queueDepth": 154,
+      "workers": 1
+    },
+    {
+      "offset_seconds": 37.5,
+      "completed": 99,
+      "inFlight": 123,
+      "queueDepth": 154,
+      "workers": 1
+    },
+    {
+      "offset_seconds": 38.7,
+      "completed": 99,
+      "inFlight": 123,
+      "queueDepth": 154,
+      "workers": 1
+    },
+    {
+      "offset_seconds": 39.7,
+      "completed": 99,
+      "inFlight": 123,
+      "queueDepth": 116,
+      "workers": 1
+    },
+    {
+      "offset_seconds": 40.8,
+      "completed": 101,
+      "inFlight": 121,
+      "queueDepth": 116,
+      "workers": 1
+    },
+    {
+      "offset_seconds": 41.9,
+      "completed": 120,
+      "inFlight": 102,
+      "queueDepth": 116,
+      "workers": 1
+    },
+    {
+      "offset_seconds": 42.9,
+      "completed": 121,
+      "inFlight": 101,
+      "queueDepth": 116,
+      "workers": 1
+    },
+    {
+      "offset_seconds": 44.0,
+      "completed": 121,
+      "inFlight": 101,
+      "queueDepth": 116,
+      "workers": 1
+    },
+    {
+      "offset_seconds": 45.1,
+      "completed": 121,
+      "inFlight": 101,
+      "queueDepth": 93,
+      "workers": 1
+    },
+    {
+      "offset_seconds": 46.2,
+      "completed": 121,
+      "inFlight": 101,
+      "queueDepth": 93,
+      "workers": 1
+    },
+    {
+      "offset_seconds": 47.2,
+      "completed": 121,
+      "inFlight": 101,
+      "queueDepth": 93,
+      "workers": 1
+    },
+    {
+      "offset_seconds": 48.3,
+      "completed": 121,
+      "inFlight": 101,
+      "queueDepth": 93,
+      "workers": 1
+    },
+    {
+      "offset_seconds": 49.3,
+      "completed": 121,
+      "inFlight": 101,
+      "queueDepth": 93,
+      "workers": 1
+    },
+    {
+      "offset_seconds": 50.4,
+      "completed": 121,
+      "inFlight": 101,
+      "queueDepth": 92,
+      "workers": 1
+    },
+    {
+      "offset_seconds": 51.5,
+      "completed": 121,
+      "inFlight": 101,
+      "queueDepth": 92,
+      "workers": 1
+    },
+    {
+      "offset_seconds": 52.6,
+      "completed": 121,
+      "inFlight": 101,
+      "queueDepth": 92,
+      "workers": 1
+    },
+    {
+      "offset_seconds": 53.6,
+      "completed": 121,
+      "inFlight": 101,
+      "queueDepth": 92,
+      "workers": 1
+    },
+    {
+      "offset_seconds": 54.7,
+      "completed": 121,
+      "inFlight": 101,
+      "queueDepth": 92,
+      "workers": 1
+    },
+    {
+      "offset_seconds": 55.7,
+      "completed": 121,
+      "inFlight": 101,
+      "queueDepth": 92,
+      "workers": 1
+    },
+    {
+      "offset_seconds": 56.8,
+      "completed": 122,
+      "inFlight": 100,
+      "queueDepth": 92,
+      "workers": 1
+    },
+    {
+      "offset_seconds": 57.8,
+      "completed": 142,
+      "inFlight": 80,
+      "queueDepth": 92,
+      "workers": 1
+    },
+    {
+      "offset_seconds": 58.9,
+      "completed": 157,
+      "inFlight": 65,
+      "queueDepth": 92,
+      "workers": 1
+    },
+    {
+      "offset_seconds": 60.0,
+      "completed": 172,
+      "inFlight": 50,
+      "queueDepth": 78,
+      "workers": 1
+    },
+    {
+      "offset_seconds": 61.1,
+      "completed": 188,
+      "inFlight": 34,
+      "queueDepth": 78,
+      "workers": 1
+    },
+    {
+      "offset_seconds": 62.1,
+      "completed": 215,
+      "inFlight": 7,
+      "queueDepth": 78,
+      "workers": 1
+    },
+    {
+      "offset_seconds": 63.1,
+      "completed": 222,
+      "inFlight": 0,
+      "queueDepth": 78,
+      "workers": 1
+    }
+  ],
+  "disruptions": [
+    {
+      "id": "ca821167-e8bd-4f2d-ace5-48eb9c24c7c0",
+      "type": "CANCELLATION",
+      "cause": "AOG",
+      "target_flight_id": "b8e19f56-8787-4a21-8448-2a220308aa5e",
+      "target_airport_id": "12476f57-a5e5-45ab-aefc-fad8efc89849",
+      "delay_minutes": null,
+      "occurred_at": "2025-12-31T22:06:27.353757+00:00"
+    },
+    {
+      "id": "20a4f79c-6668-4c26-afa7-23d00a9a977a",
+      "type": "CANCELLATION",
+      "cause": "AOG",
+      "target_flight_id": "f090f5a0-ce61-4199-ae3a-0ba8ac8d6c7d",
+      "target_airport_id": "b02b61c4-a3d7-4628-ace6-6fa2fd5166e6",
+      "delay_minutes": null,
+      "occurred_at": "2026-01-01T00:08:07.747602+00:00"
+    },
+    {
+      "id": "241f9798-f1ae-463d-8483-02ac842c7ff3",
+      "type": "DELAY",
+      "cause": "AOG",
+      "target_flight_id": "519554e3-0737-4c86-b97b-5f515ffa46ef",
+      "target_airport_id": "b02b61c4-a3d7-4628-ace6-6fa2fd5166e6",
+      "delay_minutes": 172,
+      "occurred_at": "2026-01-01T05:39:31.225582+00:00"
+    },
+    {
+      "id": "ad0e729c-a66e-48a0-8efd-63f99fcc1d11",
+      "type": "DELAY",
+      "cause": "AOG",
+      "target_flight_id": "0d41ee47-2a5f-4a18-a61f-0b96e75f745a",
+      "target_airport_id": "e27a984d-6548-41d0-bfcd-9eb1a7cad415",
+      "delay_minutes": 191,
+      "occurred_at": "2026-01-01T06:00:33.633667+00:00"
+    },
+    {
+      "id": "47c97e17-f0f1-44ca-b9a4-faa5e6ba1975",
+      "type": "DELAY",
+      "cause": "AOG",
+      "target_flight_id": "3d4574eb-f465-4a21-8b35-097ae5dd98f1",
+      "target_airport_id": "6142ea7d-17be-4111-9a2a-73ed562b0f79",
+      "delay_minutes": 276,
+      "occurred_at": "2026-01-01T07:05:34.833227+00:00"
+    },
+    {
+      "id": "be9afffa-9e53-46ab-a0e6-efa98108c3e7",
+      "type": "CANCELLATION",
+      "cause": "AOG",
+      "target_flight_id": "255bfc1c-7e3d-4ee4-84b6-4ec14d16f049",
+      "target_airport_id": "c241330b-01a9-471f-9e8a-774bcf36d58b",
+      "delay_minutes": null,
+      "occurred_at": "2026-01-01T07:40:44.946178+00:00"
+    },
+    {
+      "id": "fc0aefc4-8749-4540-8792-b34d4771bbe5",
+      "type": "DELAY",
+      "cause": "CASCADE",
+      "target_flight_id": "73557b9d-0fd6-447e-b52d-4af2269ed4c9",
+      "target_airport_id": "e27a984d-6548-41d0-bfcd-9eb1a7cad415",
+      "delay_minutes": 147,
+      "occurred_at": "2026-01-01T07:42:59.912313+00:00"
+    },
+    {
+      "id": "698b33ee-f282-44b1-95ee-098f8700de48",
+      "type": "DELAY",
+      "cause": "CASCADE",
+      "target_flight_id": "a0d572c8-a837-4e68-bba2-05ca3dba6da8",
+      "target_airport_id": "ec1b8ca1-f91e-4d4c-9ff4-9b7889463e85",
+      "delay_minutes": 122,
+      "occurred_at": "2026-01-01T08:34:12.910931+00:00"
+    },
+    {
+      "id": "2002c5da-9eeb-403c-ab59-641e8e132f6b",
+      "type": "CANCELLATION",
+      "cause": "AOG",
+      "target_flight_id": "3b4206c5-085b-45fb-8a8f-f810784c2f29",
+      "target_airport_id": "c241330b-01a9-471f-9e8a-774bcf36d58b",
+      "delay_minutes": null,
+      "occurred_at": "2026-01-01T09:03:18.017979+00:00"
+    },
+    {
+      "id": "a09f3a76-dcd8-45f1-840a-6ea3230e319a",
+      "type": "CANCELLATION",
+      "cause": "AOG",
+      "target_flight_id": "c6a07656-c5c9-4b91-bf6e-f9ed7e4ce29f",
+      "target_airport_id": "66b2bc5b-50c1-47fc-8e17-7b4e0837b8a3",
+      "delay_minutes": null,
+      "occurred_at": "2026-01-01T09:56:56.764082+00:00"
+    },
+    {
+      "id": "12b53d41-e0a6-4694-a770-859099864ab6",
+      "type": "DELAY",
+      "cause": "CASCADE",
+      "target_flight_id": "5e187b24-8e67-4a01-986a-646059a1120e",
+      "target_airport_id": "c241330b-01a9-471f-9e8a-774bcf36d58b",
+      "delay_minutes": 97,
+      "occurred_at": "2026-01-01T11:34:21.163832+00:00"
+    },
+    {
+      "id": "2b29bac4-5b31-47dd-9edd-68e3d8aeefd0",
+      "type": "CANCELLATION",
+      "cause": "CASCADE",
+      "target_flight_id": "c36b9a0a-41e0-4a89-966a-9ce7af521b94",
+      "target_airport_id": "66b2bc5b-50c1-47fc-8e17-7b4e0837b8a3",
+      "delay_minutes": null,
+      "occurred_at": "2026-01-01T11:58:59.648077+00:00"
+    },
+    {
+      "id": "8e9a1267-17c7-4afc-bedf-e293f5405cc3",
+      "type": "CANCELLATION",
+      "cause": "CASCADE",
+      "target_flight_id": "7466ef02-5e7b-42c8-a097-dedbefb3b939",
+      "target_airport_id": "8fadc1a6-06cb-4fb3-9a1d-e644815ef6d1",
+      "delay_minutes": null,
+      "occurred_at": "2026-01-01T12:22:29.003988+00:00"
+    },
+    {
+      "id": "65cd9207-0b28-49a1-92ef-292cd3cb2d02",
+      "type": "CANCELLATION",
+      "cause": "CASCADE",
+      "target_flight_id": "e1fff6c0-8347-41da-9c11-ab6d42f5b3f5",
+      "target_airport_id": "7412b293-4729-4739-a14f-f3d719db3ad0",
+      "delay_minutes": null,
+      "occurred_at": "2026-01-01T12:48:27.371009+00:00"
+    },
+    {
+      "id": "fb8103b2-916f-4903-89fc-05f33fe956cb",
+      "type": "DELAY",
+      "cause": "CASCADE",
+      "target_flight_id": "3ae28023-5472-4d2d-b239-9ffb27046f25",
+      "target_airport_id": "b02b61c4-a3d7-4628-ace6-6fa2fd5166e6",
+      "delay_minutes": 166,
+      "occurred_at": "2026-01-01T13:53:57.948810+00:00"
+    },
+    {
+      "id": "369602b3-8c95-4724-9028-e2d548918e66",
+      "type": "CANCELLATION",
+      "cause": "CREW",
+      "target_flight_id": "c68813fe-5255-4c75-8d55-119e3d44cb2c",
+      "target_airport_id": "6dadd6c7-95a7-4d79-bf3c-4c06434308bc",
+      "delay_minutes": null,
+      "occurred_at": "2026-01-01T14:14:52.688421+00:00"
+    },
+    {
+      "id": "6874219f-d14c-48e6-b85d-2e84d72fb136",
+      "type": "DELAY",
+      "cause": "CASCADE",
+      "target_flight_id": "54669d19-10df-4974-95ab-946da5b5cdc2",
+      "target_airport_id": "11ce5dd2-b45e-41f0-b139-d32c93cd59bf",
+      "delay_minutes": 72,
+      "occurred_at": "2026-01-01T14:20:57.338510+00:00"
+    },
+    {
+      "id": "d3b859ab-aa87-46f7-a12a-84b46acde147",
+      "type": "DELAY",
+      "cause": "CASCADE",
+      "target_flight_id": "11ab3d11-e4eb-4000-af40-d1620f6ce9bf",
+      "target_airport_id": "7412b293-4729-4739-a14f-f3d719db3ad0",
+      "delay_minutes": 176,
+      "occurred_at": "2026-01-01T16:48:33.253468+00:00"
+    },
+    {
+      "id": "cfab5667-8ffb-4c1f-9554-04425d2d4eb1",
+      "type": "DELAY",
+      "cause": "CASCADE",
+      "target_flight_id": "64880945-ad1d-4537-97f3-4368c2efeecb",
+      "target_airport_id": "6142ea7d-17be-4111-9a2a-73ed562b0f79",
+      "delay_minutes": 151,
+      "occurred_at": "2026-01-01T17:04:24.514940+00:00"
+    },
+    {
+      "id": "973d9d4a-9ed4-4ee1-919c-7bb626148c61",
+      "type": "DELAY",
+      "cause": "CASCADE",
+      "target_flight_id": "97fa7f04-8363-4007-9cae-9610c72c1fe3",
+      "target_airport_id": "b02b61c4-a3d7-4628-ace6-6fa2fd5166e6",
+      "delay_minutes": 47,
+      "occurred_at": "2026-01-01T17:53:45.479763+00:00"
+    },
+    {
+      "id": "1006fa37-efad-43b1-a219-4e164148fe20",
+      "type": "CANCELLATION",
+      "cause": "WEATHER",
+      "target_flight_id": "58c1aad6-f3f8-4ea4-bf14-eafa29f0ef7c",
+      "target_airport_id": "8fadc1a6-06cb-4fb3-9a1d-e644815ef6d1",
+      "delay_minutes": null,
+      "occurred_at": "2026-01-01T17:55:48.939093+00:00"
+    },
+    {
+      "id": "d23fbd14-631b-423a-a2fa-fc4b55f014d2",
+      "type": "DELAY",
+      "cause": "CASCADE",
+      "target_flight_id": "6c5a6c93-871c-4884-9bdf-90f2ba2c0f19",
+      "target_airport_id": "ec1b8ca1-f91e-4d4c-9ff4-9b7889463e85",
+      "delay_minutes": 22,
+      "occurred_at": "2026-01-01T20:02:20.811778+00:00"
+    },
+    {
+      "id": "5785d624-cd10-4554-80d9-d04777055c19",
+      "type": "CANCELLATION",
+      "cause": "AOG",
+      "target_flight_id": "462623be-e068-4849-aec7-1a30dfda35b2",
+      "target_airport_id": "6142ea7d-17be-4111-9a2a-73ed562b0f79",
+      "delay_minutes": null,
+      "occurred_at": "2026-01-01T20:09:22.618434+00:00"
+    },
+    {
+      "id": "faf81410-fa0d-4371-893a-f1b8422a8230",
+      "type": "DELAY",
+      "cause": "CASCADE",
+      "target_flight_id": "d226a8b3-b674-410d-9218-c9d6c093bfb0",
+      "target_airport_id": "11ce5dd2-b45e-41f0-b139-d32c93cd59bf",
+      "delay_minutes": 141,
+      "occurred_at": "2026-01-01T23:04:30.938005+00:00"
+    },
+    {
+      "id": "6cb9ccca-37a5-4a5d-b746-4f212ed9fc35",
+      "type": "DELAY",
+      "cause": "CASCADE",
+      "target_flight_id": "60a399d4-e821-4716-aac8-0da1de9f6f5b",
+      "target_airport_id": "7412b293-4729-4739-a14f-f3d719db3ad0",
+      "delay_minutes": 116,
+      "occurred_at": "2026-01-01T23:49:42.810117+00:00"
+    }
+  ],
+  "metrics": {
+    "run_id": "bdf43ae0-644f-4dcd-956e-918a9e4b729b",
+    "strategy": "greedy",
+    "status": "FINISHED",
+    "sagas_by_state": {
+      "COMPLETED": 222,
+      "FAILED_NO_CAPACITY": 53
+    },
+    "total_sagas": 275,
+    "terminal_sagas": 275,
+    "recovered": 222,
+    "recovered_pct": 80.73,
+    "weighted_recovered_pct": 83.72,
+    "unrecovered": 53,
+    "total_delay_minutes": 65265.5,
+    "avg_delay_minutes": 294.0,
+    "planning_seconds": 0.1927,
+    "planner_cpu_seconds": 0.1489,
+    "seat_conflicts": 0,
+    "recovery_seconds": 41.2,
+    "invariants_passed": null,
+    "from_snapshot": true
+  }
+}

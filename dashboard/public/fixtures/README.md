@@ -11,6 +11,9 @@ Regenerate it against a running stack:
 
     make seed-force
 
-The generated file is gitignored, since it is build output rather than source.
-Commit it with `git add -f dashboard/public/fixtures/seed42_greedy.json` if you
-want a fresh clone to show data before the stack has ever been seeded.
+The generated file is committed on purpose. The hosted demo (Dockerfile.render)
+builds the dashboard straight from the repo and has no seeder service, so a
+fixture that is not committed leaves the deployed Live Run page empty.
+
+Re-seeding rewrites it, which shows up as a normal diff. Commit the new one if
+the run it captured is a better demo, otherwise `git checkout` it.

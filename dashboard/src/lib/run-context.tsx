@@ -31,11 +31,11 @@ export function RunProvider({ children }: { children: React.ReactNode }) {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(next))
   }
 
-  const clearActiveRun = () => {
+  const clearActiveRun = React.useCallback(() => {
     const next = { runId: null, scenarioId: null, strategy: null, presetLabel: null, startedAt: null }
     setState(next)
     localStorage.removeItem(STORAGE_KEY)
-  }
+  }, [])
 
   return (
     <RunContext.Provider value={{ ...state, setActiveRun, clearActiveRun }}>{children}</RunContext.Provider>
