@@ -210,9 +210,7 @@ services:
     depends_on:
       - otel-collector
 
-  # Freezes one deterministic run into the JSON fixture the dashboard falls
-  # back to, so Live Run is never empty on a fresh boot. Runs once and exits,
-  # skipping the work if the fixture already exists.
+  
   seeder:
     <<: *app-image
     restart: "no"

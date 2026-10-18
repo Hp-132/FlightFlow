@@ -309,6 +309,105 @@ export interface AnalyticsResponse {
   gaps: { question: string; needed: string }[]
 }
 
+export interface PassengerRow {
+  booking_id: string
+  pnr: string
+  name: string
+  tier: string
+  airline: string
+  origin: string
+  dest: string
+  flights: string
+  booking_status: string
+  saga_id: string | null
+  saga_state: string | null
+}
+
+export interface PassengerList {
+  total: number
+  items: PassengerRow[]
+}
+
+export interface PassengerSegment {
+  seq: number
+  cabin: string
+  flight_id: string
+  flight_no: string
+  status: string
+  origin: string
+  dest: string
+  sched_dep_at: string | null
+  dep_at: string | null
+}
+
+export interface PassengerDetail {
+  booking_id: string
+  pnr: string
+  booking_status: string
+  passenger: {
+    name: string
+    tier: string
+    bags: number
+    is_unaccompanied_minor: boolean
+    airline: string
+  }
+  segments: PassengerSegment[]
+  others_on_flight: number
+  direct_alternatives: number
+  saga: { id: string; state: string; run_id: string } | null
+  can_disrupt: boolean
+}
+
+export interface FlightOption {
+  id: string
+  flight_no: string
+  airline: string
+  origin: string
+  dest: string
+  sched_dep_at: string
+  economy_available: number
+  business_available: number
+  direct_alternatives: number
+}
+
+export interface CreatePassengerBody {
+  name: string
+  flight_id: string
+  cabin: string
+  tier: string
+  bags: number
+  is_unaccompanied_minor: boolean
+}
+
+export interface CreatePassengerResult {
+  booking_id: string
+  pnr: string
+  name: string
+  flight_no: string
+}
+
+export interface DisruptResult {
+  run_id: string
+  flight_no: string
+  cause: string
+  disrupted_bookings: number
+  plan_batches_queued: number
+}
+
+/** The API's `detail` text when it sent one, else the raw error message. */
+export function apiErrorMessage(err: unknown): string {
+  const message = err instanceof Error ? err.message : String(err)
+  const body = message.slice(message.indexOf(': ', message.indexOf('->')) + 2)
+  try {
+    const detail = JSON.parse(body)?.detail
+    if (typeof detail === 'string') return detail
+    if (Array.isArray(detail) && detail[0]?.msg) return String(detail[0].msg)
+  } catch {
+    // not JSON; fall through
+  }
+  return message
+}
+
 export const api = {
   createScenario: (body: {
     preset: string
@@ -378,6 +477,32 @@ export const api = {
   getSagaEvents: (sagaId: string) => request<SagaDetail>(`/sagas/${sagaId}/events`),
 
   searchSagas: (q: string) => request<SagaSearchResult[]>(`/sagas/search?q=${encodeURIComponent(q)}`),
+
+  listPassengers: (params: { q?: string; history?: 'all' | 'with'; limit?: number }) => {
+    const qs = new URLSearchParams()
+    if (params.q) qs.set('q', params.q)
+    if (params.history) qs.set('history', params.history)
+    if (params.limit) qs.set('limit', String(params.limit))
+    return request<PassengerList>(`/passengers?${qs}`)
+  },
+
+  getPassenger: (bookingId: string) => request<PassengerDetail>(`/passengers/${bookingId}`),
+
+  listFlights: (params: { q?: string; limit?: number }) => {
+    const qs = new URLSearchParams()
+    if (params.q) qs.set('q', params.q)
+    if (params.limit) qs.set('limit', String(params.limit))
+    return request<FlightOption[]>(`/flights?${qs}`)
+  },
+
+  createPassenger: (body: CreatePassengerBody) =>
+    request<CreatePassengerResult>('/passengers', { method: 'POST', body: JSON.stringify(body) }),
+
+  disruptPassenger: (bookingId: string, cause: string) =>
+    request<DisruptResult>(`/passengers/${bookingId}/disrupt`, {
+      method: 'POST',
+      body: JSON.stringify({ cause }),
+    }),
 
   streamUrl: (runId: string) => `${API_BASE}/runs/${runId}/stream?api_key=${API_KEY}`,
 }

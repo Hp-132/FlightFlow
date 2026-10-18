@@ -148,9 +148,28 @@ seeded fixture so the page is never blank — see [Seed data](#-seed-data).
 
 Run and inspect the six correctness checks.
 
-### Saga Inspector
+### Passenger History
 
-Search passengers and inspect the complete saga event timeline.
+Pick any passenger from the list, or search by name or PNR (the booking
+reference on a ticket), to replay their saga step by step. Passengers who have
+already been rebooked are listed first.
+
+**Add passenger** books a new passenger on a flight from the loaded network,
+with a generated PNR. Selecting them offers **Cancel flight and rebook**, which
+cancels their flight and sends every booking on it through the normal planner,
+saga and worker pipeline, so the timeline fills in live. The flight picker shows
+how many direct alternatives each flight has, so you can tell in advance whether
+a rebooking will succeed.
+
+Things worth knowing:
+
+* A new booking takes one seat atomically, so the oversell invariant (I1) keeps holding.
+* Cancelling a flight disrupts everyone booked on it, not just the new passenger.
+* The sagas join the most recent run, reopening it if it had finished. Invariant
+  I2 is checked per run, so a separate run would make Safety Checks fail on the
+  run already on screen.
+* Starting a run from Run Control loads a fresh scenario, which replaces every
+  passenger, including ones you added.
 
 ### Compare
 

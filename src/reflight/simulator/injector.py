@@ -34,9 +34,10 @@ MIN_CONNECTION_MINUTES = 45
 
 
 def apply_timeline(db: Session, run_id: str, scenario_minio_key: str) -> dict[str, Any]:
-    scenario = get_json(scenario_minio_key)
-    timeline = scenario["timeline"]
+    return apply_events(db, run_id, get_json(scenario_minio_key)["timeline"])
 
+
+def apply_events(db: Session, run_id: str, timeline: list[dict[str, Any]]) -> dict[str, Any]:
     cancelled_ids: set[str] = set()
     delay_by_flight: dict[str, int] = {}
 

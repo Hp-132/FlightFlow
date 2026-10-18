@@ -10,6 +10,7 @@ from reflight.api.routes_chaos import fairness_router
 from reflight.api.routes_chaos import router as chaos_router
 from reflight.api.routes_finops import router as finops_router
 from reflight.api.routes_invariants import router as invariants_router
+from reflight.api.routes_passengers import router as passengers_router
 from reflight.api.routes_runs import router as runs_router
 from reflight.api.routes_runs import stream_router
 from reflight.api.routes_sagas import router as sagas_router
@@ -40,6 +41,7 @@ app.include_router(fairness_router)
 app.include_router(invariants_router)
 app.include_router(finops_router)
 app.include_router(sagas_router)
+app.include_router(passengers_router)
 
 instrument_fastapi(app)
 

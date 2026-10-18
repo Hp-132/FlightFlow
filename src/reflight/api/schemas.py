@@ -1,4 +1,6 @@
-from pydantic import BaseModel, Field
+from uuid import UUID
+
+from pydantic import BaseModel, ConfigDict, Field
 
 
 class GenerateScenarioRequest(BaseModel):
@@ -59,3 +61,21 @@ class FairnessRequest(BaseModel):
 
     default_cap: int | None = Field(default=None, ge=0, le=100)
     caps: dict[str, int] | None = None
+
+
+class CreatePassengerRequest(BaseModel):
+    model_config = ConfigDict(str_strip_whitespace=True)
+
+    name: str = Field(min_length=2, max_length=60)
+    flight_id: UUID
+    cabin: str = Field(default="ECONOMY", pattern="^(ECONOMY|BUSINESS)$")
+    tier: str = Field(default="NONE", pattern="^(NONE|SILVER|GOLD)$")
+    bags: int = Field(default=1, ge=0, le=5)
+    is_unaccompanied_minor: bool = False
+
+
+class DisruptBookingRequest(BaseModel):
+    """CASCADE is excluded: it only arises from an earlier delay on the same
+    aircraft, which a single manual cancellation cannot produce."""
+
+    cause: str = Field(default="WEATHER", pattern="^(WEATHER|AOG|CREW|ATC)$")
