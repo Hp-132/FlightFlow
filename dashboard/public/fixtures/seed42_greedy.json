@@ -1,7 +1,7 @@
 {
   "fixture_version": 1,
   "generated_by": "scripts/seed_data.py",
-  "captured_at": "2026-10-18T11:50:11.424802+00:00",
+  "captured_at": "2026-10-18T14:04:02.805648+00:00",
   "params": {
     "preset": "storm",
     "seed": 42,
@@ -10,11 +10,11 @@
   },
   "run": {
     "run_id": "bdf43ae0-644f-4dcd-956e-918a9e4b729b",
-    "scenario_id": "a452a461-62fb-49d3-bfed-9cb5127faed4",
+    "scenario_id": "8fe9d2a0-362b-4403-ac38-f7acac9ea8c6",
     "status": "RUNNING",
     "strategy": "greedy",
     "settled": true,
-    "wall_seconds": 63.1
+    "wall_seconds": 35.8
   },
   "start": {
     "run_id": "bdf43ae0-644f-4dcd-956e-918a9e4b729b",
@@ -38,427 +38,259 @@
       "FAILED_NO_CAPACITY": 53,
       "COMPLETED": 222
     },
-    "queue_depth": 78,
-    "workers_active": 1
+    "queue_depth": 94,
+    "workers_active": 2
   },
   "history": [
     {
-      "offset_seconds": 0.5,
+      "offset_seconds": 0.2,
       "completed": 0,
       "inFlight": 0,
       "queueDepth": 0,
       "workers": 2
     },
     {
-      "offset_seconds": 1.5,
+      "offset_seconds": 1.3,
       "completed": 0,
       "inFlight": 0,
       "queueDepth": 0,
       "workers": 2
     },
     {
-      "offset_seconds": 2.6,
+      "offset_seconds": 2.3,
       "completed": 0,
       "inFlight": 0,
       "queueDepth": 0,
       "workers": 2
     },
     {
-      "offset_seconds": 3.7,
+      "offset_seconds": 3.4,
       "completed": 0,
       "inFlight": 0,
       "queueDepth": 0,
       "workers": 2
     },
     {
-      "offset_seconds": 4.8,
-      "completed": 0,
-      "inFlight": 0,
-      "queueDepth": 0,
-      "workers": 2
-    },
-    {
-      "offset_seconds": 5.9,
-      "completed": 0,
-      "inFlight": 0,
-      "queueDepth": 0,
-      "workers": 2
-    },
-    {
-      "offset_seconds": 7.0,
-      "completed": 0,
-      "inFlight": 0,
-      "queueDepth": 0,
-      "workers": 2
-    },
-    {
-      "offset_seconds": 8.1,
-      "completed": 0,
-      "inFlight": 0,
-      "queueDepth": 0,
-      "workers": 2
-    },
-    {
-      "offset_seconds": 9.2,
+      "offset_seconds": 4.4,
       "completed": 0,
       "inFlight": 222,
       "queueDepth": 0,
       "workers": 2
     },
     {
-      "offset_seconds": 10.3,
+      "offset_seconds": 5.5,
       "completed": 0,
       "inFlight": 222,
       "queueDepth": 0,
       "workers": 2
     },
     {
-      "offset_seconds": 11.4,
+      "offset_seconds": 6.5,
       "completed": 0,
       "inFlight": 222,
       "queueDepth": 0,
       "workers": 2
     },
     {
-      "offset_seconds": 12.5,
+      "offset_seconds": 7.6,
       "completed": 0,
       "inFlight": 222,
       "queueDepth": 0,
       "workers": 2
     },
     {
-      "offset_seconds": 13.7,
-      "completed": 0,
-      "inFlight": 222,
-      "queueDepth": 0,
-      "workers": 2
-    },
-    {
-      "offset_seconds": 14.8,
-      "completed": 0,
-      "inFlight": 222,
-      "queueDepth": 112,
-      "workers": 2
-    },
-    {
-      "offset_seconds": 15.8,
+      "offset_seconds": 8.6,
       "completed": 10,
       "inFlight": 212,
-      "queueDepth": 112,
+      "queueDepth": 0,
       "workers": 2
     },
     {
-      "offset_seconds": 16.9,
+      "offset_seconds": 9.7,
       "completed": 10,
       "inFlight": 212,
-      "queueDepth": 112,
+      "queueDepth": 0,
+      "workers": 2
+    },
+    {
+      "offset_seconds": 10.7,
+      "completed": 25,
+      "inFlight": 197,
+      "queueDepth": 0,
+      "workers": 2
+    },
+    {
+      "offset_seconds": 11.7,
+      "completed": 45,
+      "inFlight": 177,
+      "queueDepth": 0,
+      "workers": 2
+    },
+    {
+      "offset_seconds": 12.8,
+      "completed": 45,
+      "inFlight": 177,
+      "queueDepth": 215,
+      "workers": 2
+    },
+    {
+      "offset_seconds": 13.8,
+      "completed": 45,
+      "inFlight": 177,
+      "queueDepth": 215,
+      "workers": 2
+    },
+    {
+      "offset_seconds": 14.9,
+      "completed": 45,
+      "inFlight": 177,
+      "queueDepth": 215,
+      "workers": 2
+    },
+    {
+      "offset_seconds": 15.9,
+      "completed": 45,
+      "inFlight": 177,
+      "queueDepth": 215,
+      "workers": 2
+    },
+    {
+      "offset_seconds": 17.0,
+      "completed": 47,
+      "inFlight": 175,
+      "queueDepth": 215,
       "workers": 2
     },
     {
       "offset_seconds": 18.0,
-      "completed": 10,
-      "inFlight": 212,
-      "queueDepth": 112,
+      "completed": 76,
+      "inFlight": 146,
+      "queueDepth": 165,
       "workers": 2
     },
     {
-      "offset_seconds": 19.1,
-      "completed": 18,
-      "inFlight": 204,
-      "queueDepth": 112,
-      "workers": 2
-    },
-    {
-      "offset_seconds": 20.2,
-      "completed": 28,
-      "inFlight": 194,
-      "queueDepth": 200,
-      "workers": 2
-    },
-    {
-      "offset_seconds": 21.3,
-      "completed": 39,
-      "inFlight": 183,
-      "queueDepth": 200,
-      "workers": 2
-    },
-    {
-      "offset_seconds": 22.4,
-      "completed": 45,
-      "inFlight": 177,
-      "queueDepth": 200,
-      "workers": 2
-    },
-    {
-      "offset_seconds": 23.4,
-      "completed": 45,
-      "inFlight": 177,
-      "queueDepth": 200,
-      "workers": 2
-    },
-    {
-      "offset_seconds": 24.5,
-      "completed": 45,
-      "inFlight": 177,
-      "queueDepth": 200,
-      "workers": 2
-    },
-    {
-      "offset_seconds": 25.6,
-      "completed": 45,
-      "inFlight": 177,
-      "queueDepth": 169,
-      "workers": 2
-    },
-    {
-      "offset_seconds": 26.6,
-      "completed": 45,
-      "inFlight": 177,
-      "queueDepth": 169,
-      "workers": 2
-    },
-    {
-      "offset_seconds": 27.7,
-      "completed": 45,
-      "inFlight": 177,
-      "queueDepth": 169,
-      "workers": 1
-    },
-    {
-      "offset_seconds": 28.8,
-      "completed": 45,
-      "inFlight": 177,
-      "queueDepth": 169,
-      "workers": 1
-    },
-    {
-      "offset_seconds": 29.9,
-      "completed": 45,
-      "inFlight": 177,
-      "queueDepth": 168,
-      "workers": 1
-    },
-    {
-      "offset_seconds": 31.0,
-      "completed": 45,
-      "inFlight": 177,
-      "queueDepth": 168,
-      "workers": 1
-    },
-    {
-      "offset_seconds": 32.1,
-      "completed": 55,
-      "inFlight": 167,
-      "queueDepth": 168,
-      "workers": 1
-    },
-    {
-      "offset_seconds": 33.2,
-      "completed": 72,
-      "inFlight": 150,
-      "queueDepth": 168,
-      "workers": 1
-    },
-    {
-      "offset_seconds": 34.2,
-      "completed": 93,
-      "inFlight": 129,
-      "queueDepth": 168,
-      "workers": 1
-    },
-    {
-      "offset_seconds": 35.3,
+      "offset_seconds": 19.0,
       "completed": 99,
       "inFlight": 123,
-      "queueDepth": 154,
-      "workers": 1
+      "queueDepth": 165,
+      "workers": 2
     },
     {
-      "offset_seconds": 36.4,
+      "offset_seconds": 20.1,
       "completed": 99,
       "inFlight": 123,
-      "queueDepth": 154,
-      "workers": 1
+      "queueDepth": 165,
+      "workers": 2
     },
     {
-      "offset_seconds": 37.5,
+      "offset_seconds": 21.2,
       "completed": 99,
       "inFlight": 123,
-      "queueDepth": 154,
-      "workers": 1
+      "queueDepth": 165,
+      "workers": 2
     },
     {
-      "offset_seconds": 38.7,
-      "completed": 99,
-      "inFlight": 123,
-      "queueDepth": 154,
-      "workers": 1
+      "offset_seconds": 22.2,
+      "completed": 111,
+      "inFlight": 111,
+      "queueDepth": 165,
+      "workers": 2
     },
     {
-      "offset_seconds": 39.7,
-      "completed": 99,
-      "inFlight": 123,
-      "queueDepth": 116,
-      "workers": 1
-    },
-    {
-      "offset_seconds": 40.8,
-      "completed": 101,
-      "inFlight": 121,
-      "queueDepth": 116,
-      "workers": 1
-    },
-    {
-      "offset_seconds": 41.9,
-      "completed": 120,
-      "inFlight": 102,
-      "queueDepth": 116,
-      "workers": 1
-    },
-    {
-      "offset_seconds": 42.9,
+      "offset_seconds": 23.3,
       "completed": 121,
       "inFlight": 101,
-      "queueDepth": 116,
-      "workers": 1
+      "queueDepth": 135,
+      "workers": 2
     },
     {
-      "offset_seconds": 44.0,
+      "offset_seconds": 24.4,
       "completed": 121,
       "inFlight": 101,
-      "queueDepth": 116,
-      "workers": 1
+      "queueDepth": 135,
+      "workers": 2
     },
     {
-      "offset_seconds": 45.1,
+      "offset_seconds": 25.4,
       "completed": 121,
       "inFlight": 101,
-      "queueDepth": 93,
-      "workers": 1
+      "queueDepth": 135,
+      "workers": 2
     },
     {
-      "offset_seconds": 46.2,
+      "offset_seconds": 26.5,
       "completed": 121,
       "inFlight": 101,
-      "queueDepth": 93,
-      "workers": 1
+      "queueDepth": 135,
+      "workers": 2
     },
     {
-      "offset_seconds": 47.2,
-      "completed": 121,
-      "inFlight": 101,
-      "queueDepth": 93,
-      "workers": 1
-    },
-    {
-      "offset_seconds": 48.3,
-      "completed": 121,
-      "inFlight": 101,
-      "queueDepth": 93,
-      "workers": 1
-    },
-    {
-      "offset_seconds": 49.3,
-      "completed": 121,
-      "inFlight": 101,
-      "queueDepth": 93,
-      "workers": 1
-    },
-    {
-      "offset_seconds": 50.4,
+      "offset_seconds": 27.5,
       "completed": 121,
       "inFlight": 101,
       "queueDepth": 92,
-      "workers": 1
+      "workers": 2
     },
     {
-      "offset_seconds": 51.5,
+      "offset_seconds": 28.6,
       "completed": 121,
       "inFlight": 101,
       "queueDepth": 92,
-      "workers": 1
+      "workers": 2
     },
     {
-      "offset_seconds": 52.6,
+      "offset_seconds": 29.7,
       "completed": 121,
       "inFlight": 101,
       "queueDepth": 92,
-      "workers": 1
+      "workers": 2
     },
     {
-      "offset_seconds": 53.6,
+      "offset_seconds": 30.7,
       "completed": 121,
       "inFlight": 101,
       "queueDepth": 92,
-      "workers": 1
+      "workers": 2
     },
     {
-      "offset_seconds": 54.7,
+      "offset_seconds": 31.7,
       "completed": 121,
       "inFlight": 101,
       "queueDepth": 92,
-      "workers": 1
+      "workers": 2
     },
     {
-      "offset_seconds": 55.7,
+      "offset_seconds": 32.8,
       "completed": 121,
       "inFlight": 101,
-      "queueDepth": 92,
-      "workers": 1
+      "queueDepth": 94,
+      "workers": 2
     },
     {
-      "offset_seconds": 56.8,
-      "completed": 122,
-      "inFlight": 100,
-      "queueDepth": 92,
-      "workers": 1
-    },
-    {
-      "offset_seconds": 57.8,
+      "offset_seconds": 33.8,
       "completed": 142,
       "inFlight": 80,
-      "queueDepth": 92,
-      "workers": 1
+      "queueDepth": 94,
+      "workers": 2
     },
     {
-      "offset_seconds": 58.9,
-      "completed": 157,
-      "inFlight": 65,
-      "queueDepth": 92,
-      "workers": 1
+      "offset_seconds": 34.8,
+      "completed": 189,
+      "inFlight": 33,
+      "queueDepth": 94,
+      "workers": 2
     },
     {
-      "offset_seconds": 60.0,
-      "completed": 172,
-      "inFlight": 50,
-      "queueDepth": 78,
-      "workers": 1
-    },
-    {
-      "offset_seconds": 61.1,
-      "completed": 188,
-      "inFlight": 34,
-      "queueDepth": 78,
-      "workers": 1
-    },
-    {
-      "offset_seconds": 62.1,
-      "completed": 215,
-      "inFlight": 7,
-      "queueDepth": 78,
-      "workers": 1
-    },
-    {
-      "offset_seconds": 63.1,
+      "offset_seconds": 35.8,
       "completed": 222,
       "inFlight": 0,
-      "queueDepth": 78,
-      "workers": 1
+      "queueDepth": 94,
+      "workers": 2
     }
   ],
   "disruptions": [
     {
-      "id": "ca821167-e8bd-4f2d-ace5-48eb9c24c7c0",
+      "id": "0492f041-6b54-45d8-a213-9c96bd3c4b22",
       "type": "CANCELLATION",
       "cause": "AOG",
       "target_flight_id": "b8e19f56-8787-4a21-8448-2a220308aa5e",
@@ -467,7 +299,7 @@
       "occurred_at": "2025-12-31T22:06:27.353757+00:00"
     },
     {
-      "id": "20a4f79c-6668-4c26-afa7-23d00a9a977a",
+      "id": "8c984b7d-c8ad-48da-959c-777a636fe697",
       "type": "CANCELLATION",
       "cause": "AOG",
       "target_flight_id": "f090f5a0-ce61-4199-ae3a-0ba8ac8d6c7d",
@@ -476,7 +308,7 @@
       "occurred_at": "2026-01-01T00:08:07.747602+00:00"
     },
     {
-      "id": "241f9798-f1ae-463d-8483-02ac842c7ff3",
+      "id": "7cf6572d-5347-4a68-9a10-79d622f576c4",
       "type": "DELAY",
       "cause": "AOG",
       "target_flight_id": "519554e3-0737-4c86-b97b-5f515ffa46ef",
@@ -485,7 +317,7 @@
       "occurred_at": "2026-01-01T05:39:31.225582+00:00"
     },
     {
-      "id": "ad0e729c-a66e-48a0-8efd-63f99fcc1d11",
+      "id": "9b3cbf06-9327-405c-a1d3-dc3808c4a918",
       "type": "DELAY",
       "cause": "AOG",
       "target_flight_id": "0d41ee47-2a5f-4a18-a61f-0b96e75f745a",
@@ -494,7 +326,7 @@
       "occurred_at": "2026-01-01T06:00:33.633667+00:00"
     },
     {
-      "id": "47c97e17-f0f1-44ca-b9a4-faa5e6ba1975",
+      "id": "330c8d65-45d6-4926-85be-70714a162261",
       "type": "DELAY",
       "cause": "AOG",
       "target_flight_id": "3d4574eb-f465-4a21-8b35-097ae5dd98f1",
@@ -503,7 +335,7 @@
       "occurred_at": "2026-01-01T07:05:34.833227+00:00"
     },
     {
-      "id": "be9afffa-9e53-46ab-a0e6-efa98108c3e7",
+      "id": "c88c4c0c-4f37-464c-9b1f-d5bc9def5c57",
       "type": "CANCELLATION",
       "cause": "AOG",
       "target_flight_id": "255bfc1c-7e3d-4ee4-84b6-4ec14d16f049",
@@ -512,7 +344,7 @@
       "occurred_at": "2026-01-01T07:40:44.946178+00:00"
     },
     {
-      "id": "fc0aefc4-8749-4540-8792-b34d4771bbe5",
+      "id": "660d3394-e35e-4255-a701-a63144790913",
       "type": "DELAY",
       "cause": "CASCADE",
       "target_flight_id": "73557b9d-0fd6-447e-b52d-4af2269ed4c9",
@@ -521,7 +353,7 @@
       "occurred_at": "2026-01-01T07:42:59.912313+00:00"
     },
     {
-      "id": "698b33ee-f282-44b1-95ee-098f8700de48",
+      "id": "bb06ea68-bf20-4c00-b0f7-65d1a18bfd3a",
       "type": "DELAY",
       "cause": "CASCADE",
       "target_flight_id": "a0d572c8-a837-4e68-bba2-05ca3dba6da8",
@@ -530,7 +362,7 @@
       "occurred_at": "2026-01-01T08:34:12.910931+00:00"
     },
     {
-      "id": "2002c5da-9eeb-403c-ab59-641e8e132f6b",
+      "id": "4939d577-f679-47ae-9565-b78e264ad5ff",
       "type": "CANCELLATION",
       "cause": "AOG",
       "target_flight_id": "3b4206c5-085b-45fb-8a8f-f810784c2f29",
@@ -539,7 +371,7 @@
       "occurred_at": "2026-01-01T09:03:18.017979+00:00"
     },
     {
-      "id": "a09f3a76-dcd8-45f1-840a-6ea3230e319a",
+      "id": "49ef8617-85e5-455d-a610-2072175a7cf8",
       "type": "CANCELLATION",
       "cause": "AOG",
       "target_flight_id": "c6a07656-c5c9-4b91-bf6e-f9ed7e4ce29f",
@@ -548,7 +380,7 @@
       "occurred_at": "2026-01-01T09:56:56.764082+00:00"
     },
     {
-      "id": "12b53d41-e0a6-4694-a770-859099864ab6",
+      "id": "1ae9bbbb-a08a-4d6f-b87e-dd4e082306eb",
       "type": "DELAY",
       "cause": "CASCADE",
       "target_flight_id": "5e187b24-8e67-4a01-986a-646059a1120e",
@@ -557,7 +389,7 @@
       "occurred_at": "2026-01-01T11:34:21.163832+00:00"
     },
     {
-      "id": "2b29bac4-5b31-47dd-9edd-68e3d8aeefd0",
+      "id": "bb7e67b8-e71b-4223-a069-201a806a8547",
       "type": "CANCELLATION",
       "cause": "CASCADE",
       "target_flight_id": "c36b9a0a-41e0-4a89-966a-9ce7af521b94",
@@ -566,7 +398,7 @@
       "occurred_at": "2026-01-01T11:58:59.648077+00:00"
     },
     {
-      "id": "8e9a1267-17c7-4afc-bedf-e293f5405cc3",
+      "id": "7e3f8b56-8a3d-4d4c-a080-495e73a9ed71",
       "type": "CANCELLATION",
       "cause": "CASCADE",
       "target_flight_id": "7466ef02-5e7b-42c8-a097-dedbefb3b939",
@@ -575,7 +407,7 @@
       "occurred_at": "2026-01-01T12:22:29.003988+00:00"
     },
     {
-      "id": "65cd9207-0b28-49a1-92ef-292cd3cb2d02",
+      "id": "e789f2ee-4e35-428c-9b4d-f1f45a958508",
       "type": "CANCELLATION",
       "cause": "CASCADE",
       "target_flight_id": "e1fff6c0-8347-41da-9c11-ab6d42f5b3f5",
@@ -584,7 +416,7 @@
       "occurred_at": "2026-01-01T12:48:27.371009+00:00"
     },
     {
-      "id": "fb8103b2-916f-4903-89fc-05f33fe956cb",
+      "id": "11df1111-bd10-4dfc-8096-4aaae3d895b6",
       "type": "DELAY",
       "cause": "CASCADE",
       "target_flight_id": "3ae28023-5472-4d2d-b239-9ffb27046f25",
@@ -593,7 +425,7 @@
       "occurred_at": "2026-01-01T13:53:57.948810+00:00"
     },
     {
-      "id": "369602b3-8c95-4724-9028-e2d548918e66",
+      "id": "aebca021-7e89-45a2-b2d5-2cd532529cb8",
       "type": "CANCELLATION",
       "cause": "CREW",
       "target_flight_id": "c68813fe-5255-4c75-8d55-119e3d44cb2c",
@@ -602,7 +434,7 @@
       "occurred_at": "2026-01-01T14:14:52.688421+00:00"
     },
     {
-      "id": "6874219f-d14c-48e6-b85d-2e84d72fb136",
+      "id": "73326f4a-c78b-4473-baf6-99c2884599e6",
       "type": "DELAY",
       "cause": "CASCADE",
       "target_flight_id": "54669d19-10df-4974-95ab-946da5b5cdc2",
@@ -611,7 +443,7 @@
       "occurred_at": "2026-01-01T14:20:57.338510+00:00"
     },
     {
-      "id": "d3b859ab-aa87-46f7-a12a-84b46acde147",
+      "id": "07bff8cf-2806-45fd-a892-0512a5beb5ea",
       "type": "DELAY",
       "cause": "CASCADE",
       "target_flight_id": "11ab3d11-e4eb-4000-af40-d1620f6ce9bf",
@@ -620,7 +452,7 @@
       "occurred_at": "2026-01-01T16:48:33.253468+00:00"
     },
     {
-      "id": "cfab5667-8ffb-4c1f-9554-04425d2d4eb1",
+      "id": "f836a451-6be6-4fb1-b604-9e270e04b4f0",
       "type": "DELAY",
       "cause": "CASCADE",
       "target_flight_id": "64880945-ad1d-4537-97f3-4368c2efeecb",
@@ -629,7 +461,7 @@
       "occurred_at": "2026-01-01T17:04:24.514940+00:00"
     },
     {
-      "id": "973d9d4a-9ed4-4ee1-919c-7bb626148c61",
+      "id": "4075e862-e3d1-43d4-a489-7925f7e2f50e",
       "type": "DELAY",
       "cause": "CASCADE",
       "target_flight_id": "97fa7f04-8363-4007-9cae-9610c72c1fe3",
@@ -638,7 +470,7 @@
       "occurred_at": "2026-01-01T17:53:45.479763+00:00"
     },
     {
-      "id": "1006fa37-efad-43b1-a219-4e164148fe20",
+      "id": "6e20b877-c293-454a-9724-2666555b7bb6",
       "type": "CANCELLATION",
       "cause": "WEATHER",
       "target_flight_id": "58c1aad6-f3f8-4ea4-bf14-eafa29f0ef7c",
@@ -647,7 +479,7 @@
       "occurred_at": "2026-01-01T17:55:48.939093+00:00"
     },
     {
-      "id": "d23fbd14-631b-423a-a2fa-fc4b55f014d2",
+      "id": "a31e7fd2-078f-4fa8-9ea0-3d69d30ce200",
       "type": "DELAY",
       "cause": "CASCADE",
       "target_flight_id": "6c5a6c93-871c-4884-9bdf-90f2ba2c0f19",
@@ -656,7 +488,7 @@
       "occurred_at": "2026-01-01T20:02:20.811778+00:00"
     },
     {
-      "id": "5785d624-cd10-4554-80d9-d04777055c19",
+      "id": "1a75677c-c1de-487d-b15c-80886a09dc4f",
       "type": "CANCELLATION",
       "cause": "AOG",
       "target_flight_id": "462623be-e068-4849-aec7-1a30dfda35b2",
@@ -665,7 +497,7 @@
       "occurred_at": "2026-01-01T20:09:22.618434+00:00"
     },
     {
-      "id": "faf81410-fa0d-4371-893a-f1b8422a8230",
+      "id": "2aade71d-a3df-4d25-aa3b-c2e532745310",
       "type": "DELAY",
       "cause": "CASCADE",
       "target_flight_id": "d226a8b3-b674-410d-9218-c9d6c093bfb0",
@@ -674,7 +506,7 @@
       "occurred_at": "2026-01-01T23:04:30.938005+00:00"
     },
     {
-      "id": "6cb9ccca-37a5-4a5d-b746-4f212ed9fc35",
+      "id": "b9ac73b3-909b-468f-9151-c456bab60483",
       "type": "DELAY",
       "cause": "CASCADE",
       "target_flight_id": "60a399d4-e821-4716-aac8-0da1de9f6f5b",
@@ -688,22 +520,87 @@
     "strategy": "greedy",
     "status": "FINISHED",
     "sagas_by_state": {
-      "COMPLETED": 222,
+      "COMPLETED": 177,
+      "COMPENSATED": 31,
+      "NEEDS_MANUAL": 14,
       "FAILED_NO_CAPACITY": 53
     },
     "total_sagas": 275,
     "terminal_sagas": 275,
-    "recovered": 222,
-    "recovered_pct": 80.73,
-    "weighted_recovered_pct": 83.72,
-    "unrecovered": 53,
-    "total_delay_minutes": 65265.5,
-    "avg_delay_minutes": 294.0,
-    "planning_seconds": 0.1927,
-    "planner_cpu_seconds": 0.1489,
+    "recovered": 177,
+    "recovered_pct": 64.36,
+    "weighted_recovered_pct": 66.56,
+    "unrecovered": 98,
+    "total_delay_minutes": 50572.9,
+    "avg_delay_minutes": 285.7,
+    "planning_seconds": 0.3874,
+    "planner_cpu_seconds": 0.3145,
     "seat_conflicts": 0,
-    "recovery_seconds": 41.2,
-    "invariants_passed": null,
+    "recovery_seconds": 92.9,
+    "invariants_passed": true,
     "from_snapshot": true
+  },
+  "tenants": [
+    {
+      "airline": "BC",
+      "sagas": 3,
+      "recovered": 3,
+      "recovered_pct": 100.0,
+      "in_flight": 0,
+      "queue_share_pct": 0.0,
+      "avg_delay_minutes": 0.0,
+      "avg_recovery_seconds": 28.0
+    },
+    {
+      "airline": "FZ",
+      "sagas": 28,
+      "recovered": 22,
+      "recovered_pct": 78.57,
+      "in_flight": 0,
+      "queue_share_pct": 0.0,
+      "avg_delay_minutes": 398.1,
+      "avg_recovery_seconds": 23.8
+    },
+    {
+      "airline": "KB",
+      "sagas": 244,
+      "recovered": 152,
+      "recovered_pct": 62.3,
+      "in_flight": 0,
+      "queue_share_pct": 0.0,
+      "avg_delay_minutes": 275.1,
+      "avg_recovery_seconds": 27.5
+    }
+  ],
+  "invariants": {
+    "passed": true,
+    "total_violations": 0,
+    "checks": {
+      "I1_no_oversell": {
+        "passed": true,
+        "violations": []
+      },
+      "I2_no_lost_bookings": {
+        "passed": true,
+        "violations": []
+      },
+      "I3_single_confirmed_itinerary": {
+        "passed": true,
+        "violations": []
+      },
+      "I4_compensated_no_leaks": {
+        "passed": true,
+        "violations": []
+      },
+      "I5_completed_has_holds_and_ticket": {
+        "passed": true,
+        "violations": []
+      },
+      "I6_outbox_fully_published": {
+        "passed": true,
+        "violations": []
+      }
+    },
+    "checked_at": "2026-10-18T14:04:02.792347+00:00"
   }
 }

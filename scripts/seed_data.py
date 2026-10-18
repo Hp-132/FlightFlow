@@ -132,8 +132,10 @@ def drive_run(base: str, key: str, args: argparse.Namespace) -> dict:
         thinned.append(history[-1])
         history = thinned
 
+    invariants = call(base, key, "POST", f"/runs/{run['id']}/invariants/check")
     metrics = call(base, key, "GET", f"/runs/{run['id']}/metrics")
     disruptions = call(base, key, "GET", f"/runs/{run['id']}/disruptions")
+    tenants = call(base, key, "GET", f"/runs/{run['id']}/tenants")
 
     return {
         "fixture_version": FIXTURE_VERSION,
@@ -158,6 +160,8 @@ def drive_run(base: str, key: str, args: argparse.Namespace) -> dict:
         "history": history,
         "disruptions": disruptions or [],
         "metrics": metrics,
+        "tenants": tenants or [],
+        "invariants": invariants,
     }
 
 
@@ -202,10 +206,12 @@ def main() -> int:
 
     affected = fixture["start"]["disrupted_bookings"]
     sagas = fixture["counters"].get("sagas_by_state") or {}
+    invariants = fixture["invariants"] or {}
     print(
         f"wrote {args.out} -- {affected} affected bookings, "
         f"{sum(sagas.values())} sagas, {len(fixture['history'])} chart samples, "
-        f"settled={fixture['run']['settled']}"
+        f"settled={fixture['run']['settled']}, "
+        f"invariants={'pass' if invariants.get('passed') else invariants.get('total_violations', '?')}"
     )
 
     target = args.target_bookings
