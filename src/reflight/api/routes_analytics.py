@@ -1,11 +1,9 @@
 """Flight scheduling & operations analytics.
 
-One endpoint serves the whole Analytics page. It sits at /analytics/summary
-rather than /analytics so it cannot shadow the dashboard's own /analytics
-route when a single origin serves both (ALL_IN_ONE). The reads run inside a single
-REPEATABLE READ transaction, so the KPI row, the charts and the insights are
-computed from one snapshot and cannot disagree even while a run is settling.
-All aggregation happens in Postgres.
+One endpoint serves the whole page, aggregated in Postgres. It sits at
+/analytics/summary so it cannot shadow the dashboard's own /analytics route
+when a single origin serves both (ALL_IN_ONE), and its reads share one
+REPEATABLE READ transaction so the panels cannot disagree mid-run.
 """
 
 from datetime import UTC, datetime

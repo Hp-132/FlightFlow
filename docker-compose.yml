@@ -210,10 +210,9 @@ services:
     depends_on:
       - otel-collector
 
-  # Seeds one deterministic run (seed 42, GREEDY) and freezes it into a JSON
-  # fixture the dashboard falls back to, so Run Progress is never empty on a
-  # fresh boot. Runs once and exits; skips the work if the fixture is already
-  # there (pass --force to re-seed).
+  # Freezes one deterministic run into the JSON fixture the dashboard falls
+  # back to, so Live Run is never empty on a fresh boot. Runs once and exits,
+  # skipping the work if the fixture already exists.
   seeder:
     <<: *app-image
     restart: "no"

@@ -41,7 +41,6 @@ export interface SeedFixture {
 // it is served as a static file next to the bundle.
 const FIXTURE_URL = `${import.meta.env.BASE_URL}fixtures/seed42_greedy.json`
 
-// One fetch per page load, shared by every caller.
 let pending: Promise<SeedFixture | null> | null = null
 
 function looksLikeFixture(value: unknown): value is SeedFixture {
@@ -65,7 +64,6 @@ async function fetchFixture(): Promise<SeedFixture | null> {
     const parsed: unknown = JSON.parse(await res.text())
     return looksLikeFixture(parsed) ? parsed : null
   } catch {
-    // Missing, unparseable or blocked: the caller falls back to live data.
     return null
   }
 }

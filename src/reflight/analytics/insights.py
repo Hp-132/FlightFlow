@@ -1,16 +1,9 @@
 """Turns the analytics aggregates into stated observations.
 
 Pure functions only: every input is a plain dict from `queries`, so these are
-unit-testable without a database, and the dashboard renders what they return
-rather than deriving its own numbers.
-
-Rules this module sticks to:
-
-* Every observation carries the counts it was computed from, so a reader can
-  check it.
-* Nothing claims significance or prediction. Thin samples are flagged
-  `limited_data` and the UI labels them as observations from limited data.
-* An observation that the data cannot support is not emitted at all.
+unit-testable without a database. Each observation carries the counts behind
+it, thin samples are flagged `limited_data`, and an observation the data
+cannot support is not emitted at all.
 """
 
 from statistics import pstdev
@@ -134,7 +127,6 @@ def build_insights(schedule: dict[str, Any], recovery: dict[str, Any]) -> list[d
     sagas = recovery["sagas"]
     total_flights = flights["total"]
 
-    # 1. Is there a real departure-time pattern, or is volume flat?
     spread = hourly_volume_spread(schedule["by_hour"])
     worst_hour = worst_departure_hour(schedule["by_hour"])
     if worst_hour:
@@ -170,7 +162,6 @@ def build_insights(schedule: dict[str, Any], recovery: dict[str, Any]) -> list[d
             )
         )
 
-    # 2. How severe are the delays that exist?
     histogram = {b["bucket"]: b["flights"] for b in schedule["delay_histogram"]}
     delayed = flights["delayed"]
     if delayed:
@@ -200,7 +191,6 @@ def build_insights(schedule: dict[str, Any], recovery: dict[str, Any]) -> list[d
             )
         )
 
-    # 3. Which disruption cause is hardest to recover from?
     by_cause = [c for c in recovery["recovery_by_cause"] if c["sagas"] > 0]
     if len(by_cause) >= 2:
         hardest = min(by_cause, key=lambda c: c["recovered_pct"])
@@ -230,7 +220,6 @@ def build_insights(schedule: dict[str, Any], recovery: dict[str, Any]) -> list[d
                 )
             )
 
-    # 4. Where does unrecovered demand concentrate?
     unrecovered = sagas["failed_no_capacity"] + sagas["needs_manual"]
     if sagas["total"]:
         out.append(
@@ -258,7 +247,6 @@ def build_insights(schedule: dict[str, Any], recovery: dict[str, Any]) -> list[d
             )
         )
 
-    # 5. Are step failures concentrated, or spread thin?
     if sagas["total"] and sagas["retried"]:
         dead = sorted(recovery["dead_letters"], key=lambda d: d["dead_letters"], reverse=True)
         worst_step = dead[0] if dead else None
@@ -288,7 +276,6 @@ def build_insights(schedule: dict[str, Any], recovery: dict[str, Any]) -> list[d
             )
         )
 
-    # 6. Which airport absorbed the disruption?
     airports = [a for a in schedule["airports"] if a["departures"] >= 3]
     if airports:
         worst_airport = max(

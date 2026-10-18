@@ -160,8 +160,8 @@ export interface FinopsReport {
 }
 
 // ---- analytics ---------------------------------------------------------
-// Mirrors GET /analytics. Every figure is aggregated in Postgres; nothing in
-// here is computed in the browser.
+// Mirrors GET /analytics/summary. Every figure is aggregated in Postgres;
+// nothing in here is computed in the browser.
 
 export interface AnalyticsProvenance {
   source: string
