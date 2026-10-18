@@ -7,6 +7,7 @@ FlightFlow is a distributed airline disruption-recovery system that simulates ho
 It is designed to handle **high-concurrency rebooking, worker failures, duplicate messages, seat contention, and partially completed workflows** while maintaining consistent system state.
 
 ---
+<img width="1427" height="835" alt="image" src="https://github.com/user-attachments/assets/e627863a-446b-42c7-bd58-125ee9041e6e" />
 
 ## 🚨 Problem
 
