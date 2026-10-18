@@ -353,7 +353,7 @@ export const api = {
     if (params.windowDays) q.set('window_days', String(params.windowDays))
     if (params.topN) q.set('top_n', String(params.topN))
     const suffix = q.toString()
-    return request<AnalyticsResponse>(`/analytics${suffix ? `?${suffix}` : ''}`)
+    return request<AnalyticsResponse>(`/analytics/summary${suffix ? `?${suffix}` : ''}`)
   },
 
   getFairness: () =>
